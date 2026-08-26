@@ -38,10 +38,10 @@
   - `[x]` `backend/api/v1/router.py` oluşturulması (Rota birleştirici)
   - `[x]` `backend/main.py` güncellenmesi (APIRouter ve Exception Handler entegrasyonları)
   - `[x]` Yerel testler & Git push
-- `[ ]` Faz 4: ATS & CV İyileştirme Entegrasyonu
-  - `[ ]` `backend/services/analyzer.py` güncellemesi (Pydantic model genişletme, prompt güncellemesi)
-  - `[ ]` `backend/api/v1/endpoints/analyze.py` güncellemesi (Misafir filtresine yeni kilitli alanların eklenmesi)
-  - `[ ]` `frontend/src/components/AnalysisResults.jsx` güncellemesi (3 sekme sistemi, Before/After kartları ve checklist şablonu)
-  - `[ ]` `backend/static/index.html` güncellemesi (CDN arayüzüne 3 sekme ve kilit sisteminin eklenmesi)
-  - `[ ]` `frontend/src/App.jsx` güncellemesi (Sekme parametre geçişleri)
-  - `[ ]` Yerel testler & Git push
+- `[x]` Faz 4: ATS & CV İyileştirme Entegrasyonu
+  - `[x]` `backend/services/analyzer.py` güncellemesi (Pydantic model genişletme, prompt güncellemesi)
+  - `[x]` `backend/api/v1/endpoints/analyze.py` güncellemesi (Misafir filtresine yeni kilitli alanların eklenmesi)
+  - `[x]` `frontend/src/components/AnalysisResults.jsx` güncellemesi (3 sekme sistemi, Before/After kartları ve checklist şablonu)
+  - `[x]` `backend/static/index.html` güncellemesi (CDN arayüzüne 3 sekme ve kilit sisteminin eklenmesi)
+  - `[x]` `frontend/src/App.jsx` güncellemesi (Sekme parametre geçişleri)
+  - `[x]` Yerel testler & Git push

@@ -71,3 +71,24 @@ def get_user_scan_history(user_id: str):
     except Exception as e:
         print(f"Analiz geçmişi çekilirken hata oluştu: {str(e)}")
         return []
+
+def update_user_profile(user_id: str, status: str, roles: list, location: str, search_status: str):
+    """
+    Onboarding adımında toplanan kişiselleştirilmiş profil verilerini günceller.
+    """
+    if not supabase:
+        print("Hata: Supabase başlatılmadığı için profil güncellenemiyor.")
+        return None
+    try:
+        data = {
+            "current_status": status,
+            "target_roles": roles,
+            "preferred_location": location,
+            "job_search_status": search_status
+        }
+        response = supabase.table("profiles").update(data).eq("id", user_id).execute()
+        return response.data
+    except Exception as e:
+        print(f"Kullanıcı profili güncellenirken hata oluştu: {str(e)}")
+        return None
+
