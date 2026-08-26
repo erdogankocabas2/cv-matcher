@@ -6,7 +6,6 @@ from services.cv_parser import extract_text_from_pdf
 from services.scraper import scrape_job_details
 from services.analyzer import analyze_cv_suitability
 from services.supabase_client import save_scan_history
-from core.exceptions import AppException
 
 router = APIRouter()
 
@@ -74,6 +73,15 @@ async def analyze(
             "guclu_yonler": analysis_result["guclu_yonler"],
             "eksik_yonler": ["(Kilitli Özellik) Eksik gereksinimler ve analiz detaylarını görmek için lütfen giriş yapın veya ücretsiz üye olun."],
             "optimizasyon_onerileri": ["(Kilitli Özellik) CV'nizi bu ilana göre optimize edecek kişiselleştirilmiş önerileri görmek için lütfen giriş yapın veya ücretsiz üye olun."],
-            "mulakat_sorulari": ["(Kilitli Özellik) Bu ilan için özel hazırlanan mülakat sorularını görmek için lütfen giriş yapın veya ücretsiz üye olun."]
+            "mulakat_sorulari": ["(Kilitli Özellik) Bu ilan için özel hazırlanan mülakat sorularını görmek için lütfen giriş yapın veya ücretsiz üye olun."],
+            # Faz 4 Kilitli Alanlar:
+            "eksik_ats_anahtar_kelimeleri": ["(Kilitli Özellik) Eksik ATS anahtar kelimelerini görmek için lütfen giriş yapın veya ücretsiz üye olun."],
+            "cv_optimizasyon_kilavuzu": [
+                {
+                    "mevcut_cumle": "(Kilitli Özellik) Mevcut CV satırlarınız...",
+                    "onerilen_cumle": "(Kilitli Özellik) ATS uyumlu önerilen revize satırları...",
+                    "aciklama": "Satır satır yeniden yazım rehberi ve eylem fiili analizlerini görmek için lütfen giriş yapın veya ücretsiz üye olun."
+                }
+            ]
         }
         return filtered_result

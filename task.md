@@ -28,13 +28,20 @@
   - `[x]` `frontend/src/App.jsx` güncellenmesi (Supabase Auth Modal, Giriş/Çıkış akışları, Sekmeli sonuç paneli)
   - `[x]` `backend/static/index.html` güncellenmesi (CDN tabanlı tek sayfa arayüzüne Supabase entegrasyonu)
   - `[x]` Git commit & GitHub push işlemleri
-- `[ ]` Faz 3: SaaS Mimari Refaktörü
-  - `[ ]` `backend/requirements.txt` dosyasına `pydantic-settings` eklenmesi ve kurulması
-  - `[ ]` `backend/core/config.py` oluşturulması (Pydantic Settings)
-  - `[ ]` `backend/core/exceptions.py` oluşturulması (Hata sınıfları ve middleware handler'lar)
-  - `[ ]` `backend/api/deps.py` oluşturulması (Bağımlılık enjeksiyonları)
-  - `[ ]` `backend/services/` güncellenmesi (`scraper.py` HTTPX dönüşümü, `cv_parser.py` async threadpool)
-  - `[ ]` `backend/api/v1/endpoints/` oluşturulması (`config.py`, `history.py`, `analyze.py`)
-  - `[ ]` `backend/api/v1/router.py` oluşturulması (Rota birleştirici)
-  - `[ ]` `backend/main.py` güncellenmesi (APIRouter ve Exception Handler entegrasyonları)
+- `[x]` Faz 3: SaaS Mimari Refaktörü
+  - `[x]` `backend/requirements.txt` dosyasına `pydantic-settings` eklenmesi ve kurulması
+  - `[x]` `backend/core/config.py` oluşturulması (Pydantic Settings)
+  - `[x]` `backend/core/exceptions.py` oluşturulması (Hata sınıfları ve middleware handler'lar)
+  - `[x]` `backend/api/deps.py` oluşturulması (Bağımlılık enjeksiyonları)
+  - `[x]` `backend/services/` güncellenmesi (`scraper.py` HTTPX dönüşümü, `cv_parser.py` async threadpool)
+  - `[x]` `backend/api/v1/endpoints/` oluşturulması (`config.py`, `history.py`, `analyze.py`)
+  - `[x]` `backend/api/v1/router.py` oluşturulması (Rota birleştirici)
+  - `[x]` `backend/main.py` güncellenmesi (APIRouter ve Exception Handler entegrasyonları)
+  - `[x]` Yerel testler & Git push
+- `[ ]` Faz 4: ATS & CV İyileştirme Entegrasyonu
+  - `[ ]` `backend/services/analyzer.py` güncellemesi (Pydantic model genişletme, prompt güncellemesi)
+  - `[ ]` `backend/api/v1/endpoints/analyze.py` güncellemesi (Misafir filtresine yeni kilitli alanların eklenmesi)
+  - `[ ]` `frontend/src/components/AnalysisResults.jsx` güncellemesi (3 sekme sistemi, Before/After kartları ve checklist şablonu)
+  - `[ ]` `backend/static/index.html` güncellemesi (CDN arayüzüne 3 sekme ve kilit sisteminin eklenmesi)
+  - `[ ]` `frontend/src/App.jsx` güncellemesi (Sekme parametre geçişleri)
   - `[ ]` Yerel testler & Git push
