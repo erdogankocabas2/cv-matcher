@@ -5,19 +5,25 @@ from supabase import create_client, Client
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
-if not SUPABASE_URL or not SUPABASE_SERVICE_ROLE_KEY:
-    raise ValueError("Supabase bağlantı bilgileri (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY) .env dosyasında eksik.")
-
 # Admin işlemleri için Supabase Client (Service Role yetkili)
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+supabase = None
+
+if SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY:
+    try:
+        supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+    except Exception as e:
+        print(f"Supabase Client başlatma hatası: {str(e)}")
+else:
+    print("UYARI: Supabase bağlantı bilgileri eksik. Supabase entegrasyonu devre dışı bırakıldı.")
 
 def verify_user_token(token: str):
     """
     Frontend'den gelen JWT token'ı doğrular ve kullanıcı nesnesini döner.
-    Başarısız olursa None döner.
     """
+    if not supabase:
+        print("Hata: Supabase başlatılmadığı için token doğrulanamıyor.")
+        return None
     try:
-        # Supabase API'si üzerinden token'ı doğrula ve kullanıcıyı al
         response = supabase.auth.get_user(token)
         if response and response.user:
             return response.user
@@ -30,6 +36,9 @@ def save_scan_history(user_id: str, cv_filename: str, job_url: str, job_text: st
     """
     Kullanıcının yaptığı başarılı analizi scans tablosuna kaydeder.
     """
+    if not supabase:
+        print("Hata: Supabase başlatılmadığı için analiz kaydedilemiyor.")
+        return None
     try:
         data = {
             "user_id": user_id,
@@ -49,6 +58,9 @@ def get_user_scan_history(user_id: str):
     """
     Kullanıcının geçmiş analiz raporlarını en yeniden en eskiye doğru listeler.
     """
+    if not supabase:
+        print("Hata: Supabase başlatılmadığı için geçmiş analizler çekilemiyor.")
+        return []
     try:
         response = supabase.table("scans")\
             .select("*")\
