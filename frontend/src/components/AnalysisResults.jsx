@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { CheckCircle, AlertTriangle, Lightbulb, HelpCircle, Copy, Check } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Lightbulb, HelpCircle, Copy, Check, Lock } from 'lucide-react';
 
-export default function AnalysisResults({ results }) {
+export default function AnalysisResults({ results, onOpenAuthModal }) {
   const [copiedIndex, setCopiedIndex] = useState(null);
 
   if (!results) return null;
@@ -20,6 +20,29 @@ export default function AnalysisResults({ results }) {
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);
   };
+
+  // Kilitli özellikleri algılama fonksiyonu
+  const isLocked = (list) => {
+    return list && list.length === 1 && list[0].includes("(Kilitli Özellik)");
+  };
+
+  const renderLockedState = (title) => (
+    <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/60 border-dashed text-center flex flex-col items-center justify-center min-h-[220px]">
+      <div className="p-3 bg-indigo-50 text-indigo-650 rounded-2xl mb-3 shadow-inner">
+        <Lock className="w-5 h-5 text-indigo-650" />
+      </div>
+      <h4 className="font-bold text-slate-800 text-sm">{title}</h4>
+      <p className="text-xs text-slate-500 max-w-sm mt-1.5 leading-relaxed">
+        Bu analiz detayına ve kişiselleştirilmiş İK tavsiyelerine erişmek için lütfen ücretsiz giriş yapın veya üye olun.
+      </p>
+      <button
+        onClick={onOpenAuthModal}
+        className="mt-4 py-2 px-5 bg-indigo-600 hover:bg-indigo-750 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all"
+      >
+        Ücretsiz Giriş Yap / Üye Ol
+      </button>
+    </div>
+  );
 
   return (
     <div className="space-y-6">
@@ -96,7 +119,9 @@ export default function AnalysisResults({ results }) {
             <AlertTriangle className="w-5 h-5 text-rose-500" />
             Eksik Yönler (Gereksinimler)
           </h3>
-          {eksik_yonler && eksik_yonler.length > 0 ? (
+          {isLocked(eksik_yonler) ? (
+            renderLockedState("Eksik Gereksinim Analizi")
+          ) : eksik_yonler && eksik_yonler.length > 0 ? (
             <ul className="space-y-3">
               {eksik_yonler.map((item, idx) => (
                 <li key={idx} className="flex gap-2 text-sm text-slate-600 items-start">
@@ -117,7 +142,9 @@ export default function AnalysisResults({ results }) {
           <Lightbulb className="w-5 h-5 text-indigo-500" />
           CV Optimizasyon Önerileri
         </h3>
-        {optimizasyon_onerileri && optimizasyon_onerileri.length > 0 ? (
+        {isLocked(optimizasyon_onerileri) ? (
+          renderLockedState("CV İyileştirme Tavsiyeleri")
+        ) : optimizasyon_onerileri && optimizasyon_onerileri.length > 0 ? (
           <ul className="space-y-3">
             {optimizasyon_onerileri.map((item, idx) => (
               <li key={idx} className="flex gap-2.5 text-sm text-slate-600 items-start">
@@ -129,7 +156,7 @@ export default function AnalysisResults({ results }) {
             ))}
           </ul>
         ) : (
-          <p className="text-sm text-slate-400">CV'niz bu ilan için oldukça optimize görünüyor.</p>
+          <p className="text-sm text-slate-400">CV'niz oldukça optimize görünüyor.</p>
         )}
       </div>
 
@@ -139,15 +166,16 @@ export default function AnalysisResults({ results }) {
           <HelpCircle className="w-5 h-5 text-blue-500" />
           Mülakat Hazırlık Soruları
         </h3>
-        {mulakat_sorulari && mulakat_sorulari.length > 0 ? (
+        {isLocked(mulakat_sorulari) ? (
+          renderLockedState("Mülakat Soru Simülasyonu")
+        ) : mulakat_sorulari && mulakat_sorulari.length > 0 ? (
           <div className="space-y-3">
             {mulakat_sorulari.map((item, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 group gap-3">
+              <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 gap-3">
                 <span className="text-sm text-slate-700 font-medium">{item}</span>
                 <button
                   onClick={() => copyToClipboard(item, idx)}
                   className="p-1.5 bg-white border border-slate-200 hover:border-indigo-500 text-slate-400 hover:text-indigo-600 rounded-lg transition-all shadow-sm shrink-0"
-                  title="Soruyu Kopyala"
                 >
                   {copiedIndex === idx ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                 </button>

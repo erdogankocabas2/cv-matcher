@@ -1,20 +1,152 @@
-import React, { useState } from 'react';
-import { FileText, AlertCircle, Play, FileCheck2, Info, CheckCircle, Lightbulb, HelpCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { FileText, AlertCircle, Play, FileCheck2, Info, CheckCircle, Lightbulb, HelpCircle, X, Check } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
+
 import CVUpload from './components/CVUpload';
 import JobInput from './components/JobInput';
 import AnalysisResults from './components/AnalysisResults';
 import LoadingSpinner from './components/LoadingSpinner';
 
 export default function App() {
+  // Supabase & Oturum Durumları
+  const [supabaseClient, setSupabaseClient] = useState(null);
+  const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [activeTab, setActiveTab] = useState('report'); // 'report' veya 'history'
+
+  // Girdi Durumları
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
   const [textFallback, setTextFallback] = useState('');
-  
+
+  // Analiz Durumları
   const [loading, setLoading] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState('');
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
 
+  // Auth Modal Durumları
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState('');
+  const [authSuccess, setAuthSuccess] = useState('');
+
+  // 1. Supabase Yapılandırmasını Yükle ve Başlat
+  useEffect(() => {
+    fetch('/api/config')
+      .then((res) => res.json())
+      .then((cfg) => {
+        if (cfg.supabase_url && cfg.supabase_anon_key) {
+          const client = createClient(cfg.supabase_url, cfg.supabase_anon_key);
+          setSupabaseClient(client);
+
+          // Mevcut oturumu al
+          client.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+            setUser(session?.user ?? null);
+            if (session) loadHistory(session.access_token);
+          });
+
+          // Oturum değişikliklerini dinle
+          const { data: { subscription } } = client.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+            setUser(session?.user ?? null);
+            if (session) {
+              loadHistory(session.access_token);
+            } else {
+              setHistory([]);
+              setActiveTab('report');
+            }
+          });
+
+          return () => subscription.unsubscribe();
+        }
+      })
+      .catch((err) => console.error("Supabase config yükleme hatası:", err));
+  }, []);
+
+  // Geçmiş analizleri API'den çek
+  const loadHistory = async (token) => {
+    try {
+      const res = await fetch('/api/history', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setHistory(data);
+      }
+    } catch (err) {
+      console.error("Geçmiş yükleme hatası:", err);
+    }
+  };
+
+  // Giriş yapma fonksiyonu
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!supabaseClient) return;
+    setAuthLoading(true);
+    setAuthError('');
+    setAuthSuccess('');
+
+    try {
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      setAuthSuccess("Giriş başarılı! Yönlendiriliyorsunuz...");
+      setTimeout(() => {
+        setShowAuthModal(false);
+        resetAuthForm();
+      }, 1200);
+    } catch (err) {
+      setAuthError(err.message || "Giriş yapılamadı.");
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  // Üye olma fonksiyonu
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    if (!supabaseClient) return;
+    setAuthLoading(true);
+    setAuthError('');
+    setAuthSuccess('');
+
+    try {
+      const { error } = await supabaseClient.auth.signUp({ email, password });
+      if (error) throw error;
+      setAuthSuccess("Kayıt başarılı! E-postanıza gelen onay linkini kontrol edebilirsiniz veya doğrudan giriş yapabilirsiniz.");
+    } catch (err) {
+      setAuthError(err.message || "Kayıt işlemi başarısız.");
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    if (!supabaseClient) return;
+    await supabaseClient.auth.signOut();
+  };
+
+  const resetAuthForm = () => {
+    setEmail('');
+    setPassword('');
+    setAuthError('');
+    setAuthSuccess('');
+  };
+
+  // Geçmiş analize tıklandığında sonucu yükleme
+  const loadSavedResult = (scan) => {
+    setResults(scan.results);
+    setActiveTab('report');
+  };
+
+  // Analiz Başlatma
   const handleAnalyze = async (e) => {
     e.preventDefault();
     if (!file) {
@@ -32,11 +164,11 @@ export default function App() {
 
     const steps = [
       "CV dosyası okunuyor...",
-      "İlan kaynağı taranıyor...",
-      "İlan detayları çıkarılıyor...",
-      "Gemini ile karşılaştırmalı analiz başlatılıyor...",
-      "Uygunluk skoru hesaplanıyor...",
-      "Rapor oluşturuluyor..."
+      "İlan taranıyor...",
+      "Detaylar analiz edilmeye başlandı...",
+      "Gemini 3.6 Flash ile eşleştirme yapılıyor...",
+      "Güçlü ve zayıf yönler ayrıştırılıyor...",
+      "Öneriler ve mülakat soruları hazırlanıyor..."
     ];
     
     let currentStep = 0;
@@ -47,7 +179,7 @@ export default function App() {
         currentStep++;
         setLoadingStatus(steps[currentStep]);
       }
-    }, 2000);
+    }, 2200);
 
     try {
       const formData = new FormData();
@@ -55,8 +187,14 @@ export default function App() {
       if (url) formData.append("job_url", url);
       if (textFallback) formData.append("job_text_fallback", textFallback);
 
+      const headers = {};
+      if (session?.access_token) {
+        headers["Authorization"] = `Bearer ${session.access_token}`;
+      }
+
       const response = await fetch("/api/analyze", {
         method: "POST",
+        headers: headers,
         body: formData,
       });
 
@@ -70,6 +208,11 @@ export default function App() {
       const data = await response.json();
       setResults(data);
 
+      // Eğer üye ise geçmişi güncelle
+      if (session?.access_token) {
+        loadHistory(session.access_token);
+      }
+      
       // Sonuçlara kaydır
       setTimeout(() => {
         const section = document.getElementById('analyzer-section');
@@ -90,7 +233,7 @@ export default function App() {
       <nav className="bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 px-6 sticky top-0 z-50 shadow-sm shrink-0">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2.5 bg-indigo-600 rounded-2xl text-white shadow-md shadow-indigo-600/20 animate-pulse">
+            <div className="p-2.5 bg-indigo-600 rounded-2xl text-white shadow-md shadow-indigo-600/20">
               <FileCheck2 className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -103,9 +246,27 @@ export default function App() {
             <a href="#features" className="text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors">Özellikler</a>
             <a href="#faq" className="text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors">S.S.S.</a>
           </div>
-          <a href="#analyzer-section" className="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-sm font-bold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all transform active:scale-95">
-            Analizi Başlat
-          </a>
+          
+          <div className="flex items-center gap-3">
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="hidden lg:inline text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">{user.email}</span>
+                <button
+                  onClick={handleLogout}
+                  className="py-2 px-4 border border-slate-200 hover:border-rose-200 hover:bg-rose-50 text-slate-600 hover:text-rose-600 rounded-2xl text-xs font-bold transition-all"
+                >
+                  Çıkış Yap
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => { resetAuthForm(); setIsSignUp(false); setShowAuthModal(true); }}
+                className="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-sm font-bold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all transform active:scale-95"
+              >
+                Giriş Yap
+              </button>
+            )}
+          </div>
         </div>
       </nav>
 
@@ -142,7 +303,7 @@ export default function App() {
               </div>
               <div>
                 <h4 className="font-bold text-lg">Yazılım Mühendisi İlanı Eşleşmesi</h4>
-                <p className="text-xs text-slate-400">CV_Murat_Demir.pdf ile eşleşen güçlü yönler analiz edildi.</p>
+                <p className="text-xs text-slate-450">CV_Murat_Demir.pdf ile eşleşen güçlü yönler analiz edildi.</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -266,23 +427,85 @@ export default function App() {
               </button>
             </div>
 
-            {/* Right side */}
-            <div className="lg:col-span-7 self-stretch min-h-[450px]">
-              {loading ? (
-                <LoadingSpinner status={loadingStatus} />
-              ) : results ? (
-                <AnalysisResults results={results} />
-              ) : (
-                <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-3xl border border-slate-100 shadow-md h-full min-h-[450px]">
-                  <div className="p-4 bg-slate-50 border border-slate-100 rounded-full text-slate-400 mb-4 shadow-inner">
-                    <FileCheck2 className="w-12 h-12 text-slate-400" />
-                  </div>
-                  <h3 className="text-md font-bold text-slate-700">Analiz Raporu Hazır Değil</h3>
-                  <p className="mt-2 text-sm text-slate-400 max-w-sm leading-relaxed">
-                    Öncelikle sol taraftan PDF formatındaki CV dosyanızı yükleyin ve iş ilanı detaylarını ekleyin. Ardından "Eşleşmeyi Analiz Et" butonuna basın.
-                  </p>
+            {/* Right side with TABS if logged in */}
+            <div className="lg:col-span-7 self-stretch min-h-[450px] flex flex-col">
+              {user && (
+                <div className="flex gap-2 mb-4 bg-slate-200/50 p-1.5 rounded-2xl w-fit">
+                  <button
+                    onClick={() => setActiveTab('report')}
+                    className={`py-2 px-5 rounded-xl text-xs font-extrabold transition-all ${activeTab === 'report' ? 'bg-white text-indigo-650 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                  >
+                    Analiz Raporu
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('history')}
+                    className={`py-2 px-5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 ${activeTab === 'history' ? 'bg-white text-indigo-650 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                  >
+                    <Info className="w-4 h-4" />
+                    Geçmiş Analizlerim ({history.length})
+                  </button>
                 </div>
               )}
+
+              <div className="flex-grow">
+                {loading ? (
+                  <LoadingSpinner status={loadingStatus} />
+                ) : activeTab === 'history' && user ? (
+                  /* History list */
+                  <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-md h-full min-h-[450px]">
+                    <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                      <Info className="w-5 h-5 text-indigo-650" /> Analiz Geçmişiniz
+                    </h3>
+                    {history.length > 0 ? (
+                      <div className="space-y-3 overflow-y-auto max-h-[480px] pr-2">
+                        {history.map((item) => (
+                          <div
+                            key={item.id}
+                            onClick={() => loadSavedResult(item)}
+                            className="p-4 bg-slate-50 hover:bg-indigo-50/30 border border-slate-200 hover:border-indigo-200/50 rounded-2xl transition-all cursor-pointer flex justify-between items-center group"
+                          >
+                            <div className="overflow-hidden pr-4">
+                              <p className="text-sm font-bold text-slate-700 truncate">{item.cv_filename || "Bilinmeyen CV"}</p>
+                              <p className="text-xs text-slate-400 mt-1 truncate">
+                                {item.job_url ? item.job_url : "Manuel Giriş"} • {new Date(item.created_at).toLocaleDateString('tr-TR')}
+                              </p>
+                            </div>
+                            <span className={`py-1.5 px-3 rounded-full text-xs font-black shrink-0 ${
+                              item.score >= 80 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' :
+                              item.score >= 50 ? 'bg-amber-50 text-amber-600 border border-amber-100' :
+                              'bg-rose-50 text-rose-600 border border-rose-100'
+                            }`}>
+                              %{item.score}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center py-16 text-center text-slate-400">
+                        <Info className="w-10 h-10 mb-2" />
+                        <p className="text-sm font-bold">Henüz kaydedilmiş analiz yok</p>
+                        <p className="text-xs text-slate-450 mt-1">Yapacağınız başarılı analizler burada listelenecektir.</p>
+                      </div>
+                    )}
+                  </div>
+                ) : results ? (
+                  <AnalysisResults
+                    results={results}
+                    onOpenAuthModal={() => { resetAuthForm(); setIsSignUp(false); setShowAuthModal(true); }}
+                    isLoggedIn={!!user}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-3xl border border-slate-100 shadow-md h-full min-h-[450px]">
+                    <div className="p-4 bg-slate-50 border border-slate-100 rounded-full text-slate-400 mb-4 shadow-inner">
+                      <FileCheck2 className="w-12 h-12 text-slate-450" />
+                    </div>
+                    <h3 className="text-md font-bold text-slate-700">Analiz Raporu Hazır Değil</h3>
+                    <p className="mt-2 text-sm text-slate-400 max-w-sm leading-relaxed">
+                      Öncelikle sol taraftan PDF formatındaki CV dosyanızı yükleyin ve iş ilanı detaylarını ekleyin. Ardından "Eşleşmeyi Analiz Et" butonuna basın.
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -324,11 +547,89 @@ export default function App() {
               <p className="text-[10px] text-slate-400">Yapay Zeka Destekli Kariyer Aracınız</p>
             </div>
           </div>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-450">
             © 2026 CV Matcher. Analiz motoru Gemini 3.6 Flash tarafından desteklenmektedir.
           </p>
         </div>
       </footer>
+
+      {/* AUTH MODAL POP-UP */}
+      {showAuthModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-md p-6 relative overflow-hidden">
+            <button
+              onClick={() => setShowAuthModal(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-650 hover:bg-slate-100 rounded-xl transition-all"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <h3 className="text-xl font-black text-slate-800 text-center mb-6">
+              {isSignUp ? "Yeni Hesap Oluştur" : "Hesabınıza Giriş Yapın"}
+            </h3>
+
+            {authError && (
+              <div className="mb-4 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 rounded-2xl text-xs font-semibold flex gap-2">
+                <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                <span>{authError}</span>
+              </div>
+            )}
+
+            {authSuccess && (
+              <div className="mb-4 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl text-xs font-semibold flex gap-2">
+                <CheckCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                <span>{authSuccess}</span>
+              </div>
+            )}
+
+            <form onSubmit={isSignUp ? handleSignUp : handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-450 uppercase tracking-wider mb-1.5">E-posta Adresi</label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="adsoyad@sirket.com"
+                  className="block w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all bg-slate-50/50"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-450 uppercase tracking-wider mb-1.5">Şifre</label>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="block w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all bg-slate-50/50"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={authLoading}
+                className="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-md transition-all flex items-center justify-center"
+              >
+                {authLoading ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : isSignUp ? "Kayıt Ol" : "Giriş Yap"}
+              </button>
+            </form>
+
+            <div className="mt-6 border-t border-slate-100 pt-4 text-center">
+              <button
+                onClick={() => { setIsSignUp(!isSignUp); resetAuthForm(); }}
+                className="text-xs font-extrabold text-indigo-600 hover:text-indigo-800 transition-colors"
+              >
+                {isSignUp ? "Zaten bir hesabınız var mı? Giriş Yapın" : "Hesabınız yok mu? Yeni bir hesap oluşturun"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
