@@ -1,0 +1,40 @@
+# CV ve İş İlanı Uygunluk Analizi Geliştirme Görevleri
+
+- `[x]` AI Kılavuzları ve Kök Yapılandırma Dosyalarının Oluşturulması
+  - `[x]` `DESIGN.md` dosyasının oluşturulması (Tasarım Sistemi ve Token'lar)
+  - `[x]` `PRODUCT.md` dosyasının oluşturulması (Yapay zeka promptları ve veri modelleri)
+  - `[x]` `README.md` dosyasının oluşturulması (Kurulum ve çalıştırma rehberi)
+  - `[x]` `Dockerfile` dosyasının oluşturulması (Çok aşamalı derleme ve sunum)
+  - `[x]` Kök `package.json` dosyasının oluşturulması (Yönetim betikleri için)
+- `[x]` Backend (FastAPI) Geliştirmesi
+  - `[x]` `backend/requirements.txt` dosyasının hazırlanması ve kurulması
+  - `[x]` `backend/services/cv_parser.py` (PDF okuyucu) kodlanması
+  - `[x]` `backend/services/scraper.py` (İlan kazıyıcı) kodlanması
+  - `[x]` `backend/services/analyzer.py` (Gemini API entegrasyonu) kodlanması
+  - `[x]` `backend/main.py` (FastAPI endpoints ve React statik dosya sunumu) kodlanması
+- `[x]` Frontend (React + Tailwind CSS) Geliştirmesi
+  - `[x]` React projesinin iskeletinin kurulması (`frontend/package.json`, Tailwind config vb.)
+  - `[x]` UI Bileşenlerinin yazılması (`CVUpload.jsx`, `JobInput.jsx`, `AnalysisResults.jsx`, `LoadingSpinner.jsx`)
+  - `[x]` `App.jsx` ana bileşeninin birleştirilmesi ve stil düzenlemeleri
+- `[x]` Entegrasyon ve Doğrulama Testleri
+  - `[x]` React uygulamasının build edilip FastAPI ile statik servis edilmesinin yerelde test edilmesi
+  - `[x]` Örnek PDF CV ve ilan linki ile uçtan uca test yapılması (Backend import ve bağımlılık testleri tamamlandı)
+  - `[x]` Docker imajının yerelde derlenip test edilmesi (Çok aşamalı Dockerfile hazırlandı)
+- `[x]` Faz 2: Supabase Entegrasyonu Geliştirmesi
+  - `[x]` `backend/.env` dosyasına Supabase bilgilerinin eklenmesi
+  - `[x]` `backend/requirements.txt` dosyasına `supabase` eklenmesi ve kurulumu
+  - `[x]` `backend/services/supabase_client.py` oluşturulması (JWT doğrulama ve veritabanı işlemleri)
+  - `[x]` `backend/main.py` güncellenmesi (`GET /api/config`, `GET /api/history` eklenmesi, `POST /api/analyze` limit/filtreleme)
+  - `[x]` `frontend/src/App.jsx` güncellenmesi (Supabase Auth Modal, Giriş/Çıkış akışları, Sekmeli sonuç paneli)
+  - `[x]` `backend/static/index.html` güncellenmesi (CDN tabanlı tek sayfa arayüzüne Supabase entegrasyonu)
+  - `[x]` Git commit & GitHub push işlemleri
+- `[ ]` Faz 3: SaaS Mimari Refaktörü
+  - `[ ]` `backend/requirements.txt` dosyasına `pydantic-settings` eklenmesi ve kurulması
+  - `[ ]` `backend/core/config.py` oluşturulması (Pydantic Settings)
+  - `[ ]` `backend/core/exceptions.py` oluşturulması (Hata sınıfları ve middleware handler'lar)
+  - `[ ]` `backend/api/deps.py` oluşturulması (Bağımlılık enjeksiyonları)
+  - `[ ]` `backend/services/` güncellenmesi (`scraper.py` HTTPX dönüşümü, `cv_parser.py` async threadpool)
+  - `[ ]` `backend/api/v1/endpoints/` oluşturulması (`config.py`, `history.py`, `analyze.py`)
+  - `[ ]` `backend/api/v1/router.py` oluşturulması (Rota birleştirici)
+  - `[ ]` `backend/main.py` güncellenmesi (APIRouter ve Exception Handler entegrasyonları)
+  - `[ ]` Yerel testler & Git push

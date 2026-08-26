@@ -1,8 +1,10 @@
-import os
 import json
 import google.generativeai as genai
 from pydantic import BaseModel, Field, ValidationError
 from typing import List
+
+from core.config import settings
+from core.exceptions import AIException
 
 class CVAnalysisResult(BaseModel):
     uygunluk_skoru: int = Field(..., description="0-100 arası uygunluk skoru")
@@ -16,11 +18,14 @@ def analyze_cv_suitability(cv_text: str, job_text: str) -> dict:
     """
     CV ve iş ilanı metinlerini karşılaştırıp Gemini API ile analiz eder.
     """
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = settings.GEMINI_API_KEY
     if not api_key:
-        raise ValueError("GEMINI_API_KEY çevre değişkeni (Environment Variable) tanımlı değil.")
+        raise AIException("GEMINI_API_KEY çevre değişkeni yapılandırmada bulunamadı.")
 
-    genai.configure(api_key=api_key)
+    try:
+        genai.configure(api_key=api_key)
+    except Exception as e:
+        raise AIException(f"Gemini API yapılandırma hatası: {str(e)}")
 
     system_instruction = """
     Sen profesyonel bir İnsan Kaynakları (İK) Uzmanı ve Teknik İşe Alım Yöneticisisin.
@@ -83,4 +88,4 @@ def analyze_cv_suitability(cv_text: str, job_text: str) -> dict:
             continue
             
     # Eğer tüm modeller başarısız olduysa hata fırlat
-    raise ValueError(f"Gemini API analizi gerçekleştirilemedi. Son hata: {str(last_error)}")
+    raise AIException(f"Gemini API analizi gerçekleştirilemedi. Son hata: {str(last_error)}")
