@@ -3,7 +3,7 @@
 - `[x]` AI Kılavuzları ve Kök Yapılandırma Dosyalarının Oluşturulması
   - `[x]` `DESIGN.md` dosyasının oluşturulması (Tasarım Sistemi ve Token'lar)
   - `[x]` `PRODUCT.md` dosyasının oluşturulması (Yapay zeka promptları ve veri modelleri)
-  - `[x]` `README.md` dosyasının oluşturulması (Kurulum ve çalıştırma rehberi)
+  - `[x]` `README.md` dosyasının oluşturulması (Kök dizin kılavuzu)
   - `[x]` `Dockerfile` dosyasının oluşturulması (Çok aşamalı derleme ve sunum)
   - `[x]` Kök `package.json` dosyasının oluşturulması (Yönetim betikleri için)
 - `[x]` Backend (FastAPI) Geliştirmesi
@@ -45,3 +45,10 @@
   - `[x]` `backend/static/index.html` güncellemesi (CDN arayüzüne 3 sekme ve kilit sisteminin eklenmesi)
   - `[x]` `frontend/src/App.jsx` güncellemesi (Sekme parametre geçişleri)
   - `[x]` Yerel testler & Git push
+- `[x]` Faz 5: Yeni Arayüz Akışı ve Dönüşüm Tasarımı
+  - `[x]` `backend/services/supabase_client.py` güncellemesi (update_user_profile fonksiyonu)
+  - `[x]` `backend/api/v1/endpoints/profile.py` oluşturulması (PATCH /api/profile endpoint)
+  - `[x]` `backend/api/v1/router.py` güncellemesi (profile router kaydı)
+  - `[x]` `backend/static/index.html` güncellemesi (Yeni landing, blur teaser perdesi, onboarding ve auth entegrasyonu)
+  - `[x]` `frontend/src/App.jsx` güncellemesi (Adım sihirbazı durum makinesi, onboarding modal)
+  - `[x]` Git commit & GitHub push

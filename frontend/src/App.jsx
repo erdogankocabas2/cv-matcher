@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FileText, AlertCircle, Play, FileCheck2, Info, 
   CheckCircle, Lightbulb, HelpCircle, X, Check, 
@@ -22,7 +22,7 @@ export default function App() {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
   const [textFallback, setTextFallback] = useState('');
-  const [jobMethod, setJobMethod] = useState('url'); // 'url', 'text'
+  const [jobMethod, setJobMethod] = useState('url'); 
   const [dragActive, setDragActive] = useState(false);
 
   // Loading & Analysis State
@@ -66,7 +66,7 @@ export default function App() {
             }
           });
 
-          const { data: { subscription } } = client.auth.onAuthStateChange((_event, session) => {
+          client.auth.onAuthStateChange((_event, session) => {
             setSession(session);
             setUser(session?.user ?? null);
             if (session) {
@@ -76,8 +76,6 @@ export default function App() {
               setFlowState('landing');
             }
           });
-
-          return () => subscription.unsubscribe();
         }
       })
       .catch((err) => console.error("Supabase config yükleme hatası:", err));
@@ -181,7 +179,7 @@ export default function App() {
 
     try {
       const rolesArray = obRoles.split(',').map(r => r.trim()).filter(r => r.length > 0);
-      const response = await fetch('/api/profile', {
+      await fetch('/api/profile', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -194,10 +192,7 @@ export default function App() {
           job_search_status: obSearch
         })
       });
-
-      if (response.ok) {
-        setShowOnboarding(false);
-      }
+      setShowOnboarding(false);
     } catch (err) {
       console.error("Onboarding kaydetme hatası:", err);
     } finally {
@@ -317,17 +312,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-slate-50">
+    <div className="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-650">
       
       {/* NAV BAR */}
-      <nav className="bg-white/95 backdrop-blur-md border-b border-slate-100 py-4 px-6 sticky top-0 z-50 shadow-sm shrink-0">
+      <nav className="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50 shadow-sm shrink-0">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => user ? setFlowState('dashboard') : setFlowState('landing')}>
-            <div className="p-2.5 bg-indigo-600 rounded-2xl text-white shadow-md shadow-indigo-600/20">
+            <div className="p-2.5 bg-indigo-600 rounded-xl text-white shadow-sm">
               <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-black text-slate-800 tracking-tight">CV Matcher</h1>
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">CV Matcher</h1>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest -mt-0.5 font-mono">Autofit AI</p>
             </div>
           </div>
@@ -337,19 +332,19 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                  className="hidden sm:flex py-2 px-4 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-2xl text-xs font-black transition-all"
+                  className="hidden sm:flex py-2 px-4 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
                 >
                   Yeni Analiz Yap
                 </button>
                 <button
                   onClick={() => setFlowState('dashboard')}
-                  className={`py-2 px-4 rounded-xl text-xs font-extrabold ${flowState === 'dashboard' ? 'bg-slate-100 text-slate-800' : 'text-slate-500 hover:text-slate-850'}`}
+                  className={`py-2 px-4 rounded-xl text-xs font-semibold transition-all duration-200 ${flowState === 'dashboard' ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:text-slate-900'}`}
                 >
                   Analizlerim
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="py-2 px-4 border border-slate-200 hover:border-rose-200 hover:bg-rose-50 text-slate-650 hover:text-rose-600 rounded-2xl text-xs font-bold transition-all"
+                  className="py-2 px-4 border border-slate-200 hover:border-rose-200 hover:bg-rose-50 text-slate-600 hover:text-rose-600 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
                 >
                   Çıkış Yap
                 </button>
@@ -357,7 +352,7 @@ export default function App() {
             ) : (
               <button
                 onClick={() => { resetAuthForm(); setIsSignUp(false); setShowAuthModal(true); }}
-                className="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-sm font-bold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all transform active:scale-95"
+                className="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
               >
                 Giriş Yap
               </button>
@@ -366,78 +361,79 @@ export default function App() {
         </div>
       </nav>
 
-      {/* MAIN CONTENT */}
+      {/* MAIN CONTAINER */}
       <main className="flex-grow max-w-7xl w-full mx-auto p-6 flex flex-col justify-center">
+
         {error && (
-          <div className="max-w-xl mx-auto w-full mb-6 p-4 bg-rose-50 border border-rose-100 text-rose-700 rounded-3xl flex items-start gap-3 text-sm animate-fadeIn shadow-sm">
-            <AlertCircle className="w-5 h-5 text-rose-500 shrink-0" />
+          <div className="max-w-xl mx-auto w-full mb-6 p-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl flex items-start gap-3 text-sm animate-fadeIn shadow-sm">
+            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
             <div>
-              <p className="font-extrabold">Bir Sorun Oluştu</p>
-              <p className="mt-0.5 text-xs font-semibold">{error}</p>
+              <p className="font-extrabold text-slate-900">Bir Sorun Oluştu</p>
+              <p className="mt-0.5 text-xs text-slate-605">{error}</p>
             </div>
           </div>
         )}
 
-        {/* 1. LANDING */}
+        {/* 1. LANDING PAGE */}
         {flowState === 'landing' && (
           <div className="py-12 space-y-12 max-w-5xl mx-auto w-full text-center animate-fadeIn">
             <div className="space-y-6">
-              <span className="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-full text-xs font-extrabold border border-indigo-100 uppercase tracking-wider">
+              <span className="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-xs font-extrabold border border-indigo-100 uppercase tracking-wider">
                 Özgeçmiş Eşleştirme Motoru
               </span>
-              <h1 className="text-4xl md:text-6xl font-black text-slate-800 tracking-tight leading-tight max-w-3xl mx-auto">
+              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 leading-tight max-w-3xl mx-auto">
                 Bu işe ne kadar uygunsun?
               </h1>
-              <p className="text-md md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 CV'ni ve iş ilanını ekle. Uygunluk skorunu, güçlü yönlerini, eksiklerini ve CV'ni nasıl geliştirebileceğini saniyeler içinde gör.
               </p>
               <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                 <button
                   onClick={() => setFlowState('cv_upload')}
-                  className="py-4 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-md font-bold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all transform active:scale-98"
+                  className="py-4 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
                 >
                   CV'mi Analiz Et
                 </button>
                 <a
                   href="#how-it-works"
-                  className="py-4 px-8 bg-white border border-slate-200 hover:border-slate-350 text-slate-700 rounded-2xl text-md font-semibold transition-all"
+                  className="py-4 px-8 bg-white border border-slate-200 hover:border-slate-350 text-slate-600 rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
                 >
                   Nasıl Çalışıyor?
                 </a>
               </div>
             </div>
 
-            <div id="how-it-works" className="pt-12 border-t border-slate-200/50">
+            <div id="how-it-works" className="pt-12 border-t border-slate-100">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center font-black mx-auto mb-4">1</div>
-                  <h4 className="font-bold text-slate-800">CV'ni Yükle</h4>
-                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">PDF formatındaki güncel CV'ni yükle.</p>
+                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold mx-auto mb-4">1</div>
+                  <h4 className="font-bold text-slate-900 text-sm">CV'ni Yükle</h4>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">PDF formatındaki güncel CV'ni yükle.</p>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center font-black mx-auto mb-4">2</div>
-                  <h4 className="font-bold text-slate-800">İş İlanını Ekle</h4>
-                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">İlan linkini yapıştır veya metnini doğrudan ekle.</p>
+                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold mx-auto mb-4">2</div>
+                  <h4 className="font-bold text-slate-900 text-sm">İş İlanını Ekle</h4>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">İlan linkini yapıştır veya metnini doğrudan ekle.</p>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center font-black mx-auto mb-4">3</div>
-                  <h4 className="font-bold text-slate-800">Analizini Gör</h4>
-                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">Eksiklerini giderip işe kabul şansını katla.</p>
+                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold mx-auto mb-4">3</div>
+                  <h4 className="font-bold text-slate-900 text-sm">Analizini Gör</h4>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">Eksiklerini giderip işe kabul şansını katla.</p>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* 2. CV UPLOAD */}
+        {/* 2. CV UPLOAD STEP */}
         {flowState === 'cv_upload' && (
           <div className="max-w-xl mx-auto w-full animate-fadeIn space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-black text-slate-800">Önce CV'ni ekleyelim</h2>
-              <p className="text-xs text-slate-450 mt-1">Lütfen analiz edilecek PDF formatındaki özgeçmişinizi yükleyin.</p>
+              <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Önce CV'ni ekleyelim</h2>
+              <p className="text-xs text-slate-400 mt-1">Lütfen analiz edilecek PDF formatındaki özgeçmişinizi yükleyin.</p>
             </div>
 
-            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-md">
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
               <input
                 type="file"
                 accept=".pdf"
@@ -451,29 +447,29 @@ export default function App() {
                 onDragOver={handleDrag}
                 onDragLeave={handleDrag}
                 onDrop={handleDrop}
-                className={`flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-300 ${
-                  dragActive ? "border-indigo-600 bg-indigo-50/40 scale-[1.01]" : "border-slate-200 hover:border-indigo-500 bg-slate-50/50 hover:bg-slate-50"
+                className={`flex flex-col items-center justify-center border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-xl p-10 text-center cursor-pointer transition-all duration-200 bg-slate-50/50 ${
+                  dragActive ? "border-indigo-600 bg-indigo-50/30 scale-[1.01]" : ""
                 }`}
               >
-                <div className="p-4 bg-indigo-50 text-indigo-600 rounded-full mb-3">
+                <div className="p-4 bg-indigo-50 text-indigo-650 rounded-xl mb-3 shadow-inner">
                   <FileText className="w-10 h-10" />
                 </div>
-                <p className="text-sm font-bold text-slate-700">CV dosyasını sürükleyin veya seçin</p>
-                <p className="text-xs text-slate-400 mt-1.5">Sadece PDF formatı desteklenir (Maks. 10MB)</p>
+                <p className="text-sm font-semibold text-slate-700">CV dosyasını sürükleyin veya dosya seçin</p>
+                <p className="text-xs text-slate-400 mt-1">Sadece PDF formatı desteklenir (Maks. 10MB)</p>
               </label>
 
               <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col items-center justify-between text-center gap-2">
-                <p className="text-[11px] text-slate-400 font-medium flex items-center justify-center gap-1.5">
+                <p className="text-[11px] text-slate-400 font-medium">
                   🔒 CV'n yalnızca analiz için kullanılır.
                 </p>
                 <button
                   onClick={() => setShowPrivacyTooltip(!showPrivacyTooltip)}
-                  className="text-[11px] font-black text-indigo-655 hover:text-indigo-850"
+                  className="text-[11px] font-bold text-indigo-600 hover:underline"
                 >
                   Verilerim nasıl kullanılıyor?
                 </button>
                 {showPrivacyTooltip && (
-                  <div className="mt-2 p-3 bg-slate-50 border border-slate-200 text-[10px] text-slate-500 rounded-xl leading-relaxed text-left animate-fadeIn">
+                  <div className="mt-2 p-3 bg-slate-50 border border-slate-100 text-[10px] text-slate-650 rounded-lg leading-relaxed text-left animate-fadeIn">
                     Yüklediğiniz CV dosyaları hiçbir veritabanında doğrudan saklanmaz. Dosyadaki metin çıkarılarak analiz amacıyla sadece Gemini API'ye gönderilir ve analiz sonunda bellekten kalıcı olarak silinir.
                   </div>
                 )}
@@ -482,34 +478,34 @@ export default function App() {
           </div>
         )}
 
-        {/* 3. JOB INPUT */}
+        {/* 3. JOB INPUT STEP */}
         {flowState === 'job_input' && (
           <div className="max-w-xl mx-auto w-full animate-fadeIn space-y-6">
             <div className="text-center">
-              <h2 className="text-2xl font-black text-slate-800">Şimdi hedeflediğin işi ekle</h2>
-              <p className="text-xs text-slate-455 mt-1">Link veya iş tanımı metniyle ilanı ekleyin.</p>
+              <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Şimdi hedeflediğin işi ekle</h2>
+              <p className="text-xs text-slate-400 mt-1">Link veya iş tanımı metniyle ilanı ekleyin.</p>
             </div>
 
-            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-md space-y-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
               {file && (
-                <div className="p-3 bg-indigo-50/50 border border-indigo-100/50 rounded-2xl flex items-center justify-between text-xs">
-                  <span className="font-bold text-indigo-700 flex items-center gap-1.5 truncate">
-                    <CheckCircle className="w-4 h-4 text-emerald-500" /> CV Eklendi: {file.name}
+                <div className="p-3 bg-indigo-50/50 border border-indigo-100/50 rounded-xl flex items-center justify-between text-xs">
+                  <span className="font-semibold text-indigo-650 flex items-center gap-1.5 truncate">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" /> CV Eklendi: {file.name}
                   </span>
-                  <button onClick={() => { setFile(null); setFlowState('cv_upload'); }} className="text-slate-400 hover:text-rose-600 font-extrabold">Değiştir</button>
+                  <button onClick={() => { setFile(null); setFlowState('cv_upload'); }} className="text-slate-400 hover:text-rose-600 font-bold underline">Değiştir</button>
                 </div>
               )}
 
               <div className="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/50">
                 <button
                   onClick={() => setJobMethod('url')}
-                  className={`flex-grow py-2 rounded-lg text-xs font-black transition-all ${jobMethod === 'url' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                  className={`flex-grow py-2 rounded-lg text-xs font-bold transition-all ${jobMethod === 'url' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
                 >
                   İlan Linki (URL)
                 </button>
                 <button
                   onClick={() => setJobMethod('text')}
-                  className={`flex-grow py-2 rounded-lg text-xs font-black transition-all ${jobMethod === 'text' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                  className={`flex-grow py-2 rounded-lg text-xs font-bold transition-all ${jobMethod === 'text' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
                 >
                   İlan Metni
                 </button>
@@ -517,63 +513,57 @@ export default function App() {
 
               {jobMethod === 'url' ? (
                 <div className="space-y-2 animate-fadeIn">
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-wider">LİNK YAPIŞTIRIN</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">İlan linki</label>
                   <input
                     type="url"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    placeholder="LinkedIn, Kariyer.net veya ilan URL'si..."
-                    className="block w-full px-4 py-3 border border-slate-200 rounded-2xl bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                    placeholder="LinkedIn, Kariyer.net veya iş ilanı linkini yapıştır"
+                    className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-white"
                   />
                 </div>
               ) : (
                 <div className="space-y-2 animate-fadeIn">
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-wider">İLAN DETAYLARINI YAPIŞTIRIN</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">İlan açıklaması</label>
                   <textarea
                     value={textFallback}
                     onChange={(e) => setTextFallback(e.target.value)}
                     rows={6}
-                    placeholder="Aranan nitelikleri, görev tanımlarını buraya yapıştırın..."
-                    className="block w-full px-4 py-3 border border-slate-200 rounded-2xl bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none"
+                    placeholder="İş ilanındaki açıklamayı buraya yapıştırın..."
+                    className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-white resize-none"
                   />
                 </div>
               )}
 
-              <p className="text-[10px] text-slate-400 font-bold text-center">İkisinden biri yeterlidir.</p>
+              <p className="text-[10px] text-slate-400 font-semibold text-center">İkisinden biri yeterli.</p>
 
               <button
                 onClick={triggerAnalysis}
-                className="w-full py-4 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-sm font-black shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all transform active:scale-98"
+                className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200 flex items-center justify-center gap-2"
               >
+                <Play className="w-4 h-4 fill-white shrink-0" />
                 Uygunluğumu Analiz Et
               </button>
             </div>
           </div>
         )}
 
-        {/* 4. LOADING */}
+        {/* 4. LOADING EXPERIENCE */}
         {flowState === 'loading' && (
           <div className="max-w-xl mx-auto w-full text-center py-16 animate-fadeIn">
-            <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-3xl border border-slate-100 shadow-md min-h-[400px]">
-              <div className="relative flex items-center justify-center">
-                <div className="w-20 h-20 border-4 border-indigo-50 rounded-full"></div>
-                <div className="absolute w-20 h-20 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-              </div>
-              <h3 className="mt-8 text-xl font-bold text-slate-800 animate-pulse">Analiz Devam Ediyor</h3>
-              <p className="mt-2 text-sm text-slate-500 max-w-xs">{loadingStatus}</p>
-            </div>
+            <LoadingSpinner status={loadingStatus} />
           </div>
         )}
 
-        {/* 5. PREVIEW */}
+        {/* 5. PREVIEW RESULTS */}
         {flowState === 'preview' && results && (
           <div className="space-y-6 max-w-4xl mx-auto w-full animate-fadeIn relative pb-32">
             <div className="text-center space-y-2">
-              <span className="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-100 rounded-full text-[10px] font-black uppercase">İlk Değerlendirme Hazır</span>
-              <h2 className="text-3xl font-black text-slate-800">Önizleme Raporu</h2>
+              <span className="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-100 rounded-full text-[10px] font-bold uppercase">İlk Değerlendirme Hazır</span>
+              <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Önizleme Raporu</h2>
             </div>
 
-            <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-md grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
               <div className="flex flex-col items-center justify-center md:border-r md:border-slate-100 pr-0 md:pr-6 shrink-0">
                 <div className="relative flex items-center justify-center w-24 h-24">
                   <svg className="w-full h-full transform -rotate-90">
@@ -591,36 +581,36 @@ export default function App() {
                       fill="transparent"
                     />
                   </svg>
-                  <span className="absolute text-2xl font-extrabold text-slate-800">%{results.uygunluk_skoru}</span>
+                  <span className="absolute text-2xl font-extrabold text-slate-905">%{results.uygunluk_skoru}</span>
                 </div>
                 <span className="mt-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Uyum Oranı</span>
               </div>
               <div className="md:col-span-3">
-                <h3 className="text-lg font-bold text-slate-800 mb-2">Önizleme Özeti</h3>
-                <p className="text-sm text-slate-600 leading-relaxed font-semibold">{results.ozet}</p>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Önizleme Özeti</h3>
+                <p className="text-sm text-slate-655 leading-relaxed font-semibold">{results.ozet}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm">
-                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl w-fit mb-3"><CheckCircle className="w-5 h-5 text-emerald-550" /></div>
-                <h4 className="font-bold text-slate-800 text-sm">Güçlü Eşleşme</h4>
+              <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl w-fit mb-3"><CheckCircle className="w-5 h-5 text-emerald-600" /></div>
+                <h4 className="font-bold text-slate-900 text-sm">Güçlü Eşleşme</h4>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                   {results.guclu_yonler && results.guclu_yonler[0] ? results.guclu_yonler[0] : "Temel yetkinlikleriniz ilan gereksinimleriyle uyumlu görünüyor."}
                 </p>
               </div>
 
-              <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm">
-                <div className="p-2 bg-rose-50 text-rose-600 rounded-xl w-fit mb-3"><AlertCircle className="w-5 h-5 text-rose-550" /></div>
-                <h4 className="font-bold text-slate-800 text-sm">Geliştirme Alanı</h4>
+              <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="p-2 bg-rose-50 text-rose-600 rounded-xl w-fit mb-3"><AlertCircle className="w-5 h-5 text-rose-600" /></div>
+                <h4 className="font-bold text-slate-900 text-sm">Geliştirme Alanı</h4>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                   İlanda geçen kritik yetkinliklerin bir kısmı CV'nizde yeterince belirgin yazılmamış.
                 </p>
               </div>
 
-              <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm">
-                <div className="p-2 bg-indigo-50 text-indigo-650 rounded-xl w-fit mb-3"><Sparkles className="w-5 h-5 text-indigo-550" /></div>
-                <h4 className="font-bold text-slate-800 text-sm">ATS Uyumluluğu</h4>
+              <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="p-2 bg-indigo-50 text-indigo-650 rounded-xl w-fit mb-3"><Sparkles className="w-5 h-5 text-indigo-600" /></div>
+                <h4 className="font-bold text-slate-900 text-sm">ATS Uyumluluğu</h4>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                   Sektörel bazı anahtar kelimelerin eksikliği sebebiyle ATS filtrelerini geçme şansınız düşebilir.
                 </p>
@@ -628,7 +618,7 @@ export default function App() {
             </div>
 
             <div className="relative pointer-events-none opacity-40 filter blur-[2px]">
-              <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+              <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
                 <div className="h-6 bg-slate-200 rounded w-1/4"></div>
                 <div className="h-4 bg-slate-200 rounded w-full"></div>
                 <div className="h-4 bg-slate-200 rounded w-5/6"></div>
@@ -638,13 +628,13 @@ export default function App() {
             {/* Glassmorphism Blur Overlay */}
             <div className="absolute inset-x-0 bottom-0 h-64 flex flex-col items-center justify-end p-8 text-center bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent">
               <div className="max-w-md space-y-4">
-                <h3 className="text-xl font-black text-slate-800">Tam Raporunuz Hazır! 🎯</h3>
+                <h3 className="text-xl font-extrabold text-slate-900">Tam Raporunuz Hazır! 🎯</h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
                   Detaylı eksik analizi, interaktif ATS anahtar kelime listesi, satır satır Before/After CV revize önerileri ve mülakat hazırlık sorularının tamamını görmek için ücretsiz üye olun.
                 </p>
                 <button
                   onClick={() => { resetAuthForm(); setIsSignUp(true); setShowAuthModal(true); }}
-                  className="py-3.5 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-xs font-black shadow-lg shadow-indigo-600/20 active:scale-95 transition-all inline-flex items-center gap-2"
+                  className="py-3.5 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all duration-200 inline-flex items-center gap-2"
                 >
                   <Lock className="w-3.5 h-3.5 text-white" />
                   Tam Analizi Gör (Ücretsiz)
@@ -669,12 +659,12 @@ export default function App() {
           <div className="space-y-8 animate-fadeIn">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="text-2xl font-black text-slate-805">Yönetim Paneli</h2>
+                <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Yönetim Paneli</h2>
                 <p className="text-xs text-slate-450 mt-0.5">Analizlerinizi yönetin ve yeni karşılaştırmalar başlatın.</p>
               </div>
               <button
                 onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                className="py-3.5 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-xs font-black shadow-md shadow-indigo-600/10 active:scale-95 transition-all flex items-center gap-2"
+                className="py-3.5 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all duration-200 flex items-center gap-2"
               >
                 <Plus className="w-4 h-4 text-white" /> Yeni İş Analizi
               </button>
@@ -683,8 +673,8 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
               <div className="lg:col-span-8 space-y-6">
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-md">
-                  <h3 className="text-md font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                  <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
                     <History className="w-4 h-4 text-slate-500" /> Analiz Geçmişiniz
                   </h3>
                   {history.length > 0 ? (
@@ -693,7 +683,7 @@ export default function App() {
                         <div
                           key={item.id}
                           onClick={() => loadSavedResult(item)}
-                          className="p-4 bg-slate-50 hover:bg-indigo-50/20 border border-slate-200 hover:border-indigo-200/50 rounded-2xl transition-all cursor-pointer flex justify-between items-center group"
+                          className="p-4 bg-slate-50 hover:bg-indigo-50/20 border border-slate-200 hover:border-indigo-200/50 rounded-xl transition-all duration-200 cursor-pointer flex justify-between items-center group"
                         >
                           <div className="overflow-hidden pr-4">
                             <p className="text-sm font-bold text-slate-700 truncate">{item.cv_filename || "Bilinmeyen CV"}</p>
@@ -715,17 +705,17 @@ export default function App() {
                       ))}
                     </div>
                   ) : (
-                    <div className="text-center py-16 flex flex-col items-center justify-center">
-                      <div className="p-4 bg-slate-50 border border-slate-100 rounded-full text-slate-400 mb-3 shadow-inner">
+                    <div className="text-center py-16 flex flex-col items-center justify-center bg-slate-50/50 border border-dashed border-slate-200 rounded-xl p-8">
+                      <div className="p-4 bg-slate-100 border border-slate-200 rounded-xl text-slate-400 mb-3 shadow-inner">
                         <FileText className="w-10 h-10 text-slate-400" />
                       </div>
-                      <h4 className="font-bold text-slate-700">İlk iş eşleşmeni bulalım</h4>
-                      <p className="text-xs text-slate-400 mt-1.5 max-w-xs leading-relaxed">
+                      <h4 className="font-bold text-slate-800 text-sm">İlk iş eşleşmeni bulalım</h4>
+                      <p className="text-xs text-slate-500 mt-1.5 max-w-xs leading-relaxed">
                         CV'nizi bir iş ilanıyla karşılaştırın ve nerede güçlü olduğunuzu anında görün.
                       </p>
                       <button
                         onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                        className="mt-4 py-2 px-5 bg-indigo-50 text-indigo-750 rounded-xl text-xs font-bold transition-all"
+                        className="mt-4 py-2 px-5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
                       >
                         İlk Analizimi Yap
                       </button>
@@ -735,11 +725,11 @@ export default function App() {
               </div>
 
               <div className="lg:col-span-4 space-y-6">
-                <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-md">
-                  <h3 className="text-sm font-bold text-slate-800 mb-4">Aktif CV Bilgisi</h3>
+                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                  <h3 className="text-sm font-bold text-slate-900 mb-4">Aktif CV Bilgisi</h3>
                   {history.length > 0 ? (
                     <div className="space-y-4">
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-2xl">
+                      <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-xl">
                         <FileText className="w-8 h-8 text-indigo-650" />
                         <div className="overflow-hidden">
                           <p className="text-xs font-bold text-slate-750 truncate">{history[0].cv_filename}</p>
@@ -748,20 +738,20 @@ export default function App() {
                       </div>
                       <button
                         onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                        className="w-full py-2.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-650 text-xs font-bold rounded-xl transition-all"
+                        className="w-full py-2.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-600 text-xs font-bold rounded-xl transition-all"
                       >
                         CV'yi Değiştir / Güncelle
                       </button>
                     </div>
                   ) : (
-                    <p className="text-xs text-slate-450 text-center py-6">Kayıtlı CV bulunmuyor.</p>
+                    <p className="text-xs text-slate-400 text-center py-6">Kayıtlı CV bulunmuyor.</p>
                   )}
                 </div>
 
                 {history.length > 0 && (
-                  <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-md space-y-3">
-                    <h3 className="text-sm font-bold text-slate-805">Genel Analitik Çıktı</h3>
-                    <div className="p-4 bg-indigo-50/50 border border-indigo-100/50 rounded-2xl">
+                  <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+                    <h3 className="text-sm font-bold text-slate-900">Genel Analitik Çıktı</h3>
+                    <div className="p-4 bg-indigo-50/50 border border-indigo-100/50 rounded-xl">
                       <p className="text-[11px] font-black text-indigo-700 uppercase tracking-wider">Hızlı Tavsiye</p>
                       <p className="text-xs font-semibold text-slate-600 mt-1.5 leading-relaxed">
                         Son yaptığınız analizlere göre en sık eksik çıkan yetkinlik: **İletişim ve Süreç Optimizasyonu**. CV'nizde bu alandaki projelerinizi ön plana çıkarabilirsiniz.
@@ -777,27 +767,31 @@ export default function App() {
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-slate-900 border-t border-slate-800 text-white py-12 px-6 shrink-0 mt-16">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <footer className="bg-slate-900 text-slate-400 py-12 px-6 shrink-0 mt-16">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs">
           <div className="flex items-center gap-2.5">
             <div className="p-2 bg-indigo-650 rounded-xl text-white">
               <FileCheck2 className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h4 className="text-md font-bold">CV Matcher</h4>
+              <h4 className="text-md font-bold text-white">CV Matcher</h4>
               <p className="text-[10px] text-slate-400">Yapay Zeka Destekli Kariyer Aracınız</p>
             </div>
           </div>
-          <p className="text-xs text-slate-400">
-            © 2026 CV Matcher. Analiz motoru Gemini 3.6 Flash tarafından desteklenmektedir.
-          </p>
+          <div className="flex flex-col items-center md:items-end gap-2">
+            <p>© 2026 CV Matcher. Analiz motoru Gemini 3.6 Flash tarafından desteklenmektedir.</p>
+            <div className="flex gap-4 text-slate-500">
+              <a href="#privacy" className="hover:underline">Kullanım Şartları</a>
+              <a href="#privacy" className="hover:underline">Gizlilik Politikası</a>
+            </div>
+          </div>
         </div>
       </footer>
 
       {/* AUTH MODAL */}
       {showAuthModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-md p-6 relative overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 w-full max-w-md p-6 relative overflow-hidden">
             <button
               onClick={() => setShowAuthModal(false)}
               className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-650 hover:bg-slate-100 rounded-xl transition-all"
@@ -805,7 +799,7 @@ export default function App() {
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-xl font-black text-slate-800 text-center mb-6">
+            <h3 className="text-xl font-extrabold text-slate-900 text-center mb-6">
               {isSignUp ? "Analizin hazır 🎯" : "Tekrar hoş geldin"}
             </h3>
             <p className="text-xs text-slate-400 text-center -mt-4 mb-6 leading-relaxed font-medium">
@@ -813,14 +807,14 @@ export default function App() {
             </p>
 
             {authError && (
-              <div className="mb-4 p-3.5 bg-rose-50 border border-rose-100 text-rose-750 rounded-2xl text-xs font-semibold flex gap-2">
+              <div className="mb-4 p-3.5 bg-rose-50 border border-rose-100 text-rose-750 rounded-xl text-xs font-semibold flex gap-2">
                 <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
                 <span>{authError}</span>
               </div>
             )}
 
             {authSuccess && (
-              <div className="mb-4 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-2xl text-xs font-semibold flex gap-2">
+              <div className="mb-4 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl text-xs font-semibold flex gap-2">
                 <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-emerald-500" />
                 <span>{authSuccess}</span>
               </div>
@@ -835,7 +829,7 @@ export default function App() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="adsoyad@sirket.com"
-                  className="block w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all bg-slate-50/50"
+                  className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-slate-50/50"
                 />
               </div>
 
@@ -847,14 +841,14 @@ export default function App() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="block w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all bg-slate-50/50"
+                  className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-slate-50/50"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={authLoading}
-                className="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-md transition-all flex items-center justify-center"
+                className="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-sm transition-all flex items-center justify-center"
               >
                 {authLoading ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -865,7 +859,7 @@ export default function App() {
             <div className="mt-6 border-t border-slate-100 pt-4 text-center">
               <button
                 onClick={() => { setIsSignUp(!isSignUp); resetAuthForm(); }}
-                className="text-xs font-extrabold text-indigo-600 hover:text-indigo-850 transition-colors"
+                className="text-xs font-bold text-indigo-600 hover:text-indigo-850 transition-colors"
               >
                 {isSignUp ? "Zaten hesabın var mı? Giriş yap" : "Hesabınız yok mu? Hesap Oluşturun"}
               </button>
@@ -877,10 +871,10 @@ export default function App() {
       {/* PROFILE ONBOARDING */}
       {showOnboarding && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-md p-6 relative overflow-hidden space-y-6">
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 w-full max-w-md p-6 relative overflow-hidden space-y-6">
             
             <div className="text-center space-y-2">
-              <h3 className="text-xl font-black text-slate-800">Sana daha iyi öneriler verelim 🎯</h3>
+              <h3 className="text-xl font-extrabold text-slate-900">Sana daha iyi öneriler verelim 🎯</h3>
               <p className="text-xs text-slate-400 leading-relaxed">30 saniyede birkaç bilgiyle deneyimini kişiselleştirebiliriz.</p>
             </div>
 
@@ -890,7 +884,7 @@ export default function App() {
                 <select
                   value={obStatus}
                   onChange={(e) => setObStatus(e.target.value)}
-                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="">Seçiniz...</option>
                   <option value="student">Öğrenciyim</option>
@@ -907,7 +901,7 @@ export default function App() {
                   value={obRoles}
                   onChange={(e) => setObRoles(e.target.value)}
                   placeholder="Örn: Product, Growth, Finance, Data..."
-                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 bg-slate-50/50"
+                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
                 />
               </div>
 
@@ -916,7 +910,7 @@ export default function App() {
                 <select
                   value={obLocation}
                   onChange={(e) => setObLocation(e.target.value)}
-                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-sm focus:outline-none focus:ring-2"
+                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="Istanbul">İstanbul</option>
                   <option value="Turkiye">Türkiye geneli</option>
@@ -930,7 +924,7 @@ export default function App() {
                 <select
                   value={obSearch}
                   onChange={(e) => setObSearch(e.target.value)}
-                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 text-sm focus:outline-none focus:ring-2"
+                  className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="">Seçiniz...</option>
                   <option value="active">Aktif olarak iş arıyorum</option>
@@ -942,7 +936,7 @@ export default function App() {
               <button
                 type="submit"
                 disabled={obLoading}
-                className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-md transition-all flex items-center justify-center"
+                className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-sm transition-all flex items-center justify-center"
               >
                 {obLoading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : "Kişiselleştirmeyi Tamamla"}
               </button>
@@ -950,7 +944,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setShowOnboarding(false)}
-                className="w-full text-center text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors"
+                className="w-full text-center text-xs font-semibold text-slate-400 hover:text-slate-655 transition-colors"
               >
                 Şimdilik geç
               </button>
@@ -960,6 +954,20 @@ export default function App() {
         </div>
       )}
 
+    </div>
+  );
+}
+
+// --- LoadingSpinner Component ---
+function LoadingSpinner({ status }) {
+  return (
+    <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-slate-100 shadow-sm min-h-[450px]">
+      <div className="relative flex items-center justify-center">
+        <div className="w-20 h-20 border-4 border-indigo-50 rounded-full"></div>
+        <div className="absolute w-20 h-20 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+      <h3 className="mt-8 text-xl font-bold text-slate-900 animate-pulse">Analiz Devam Ediyor</h3>
+      <p className="mt-2 text-sm text-slate-600 max-w-xs">{status}</p>
     </div>
   );
 }
