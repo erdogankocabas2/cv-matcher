@@ -20,24 +20,28 @@
           colors: {
             slate: {
               50: '#f8fafc',
+              350: '#cbd5e1',
               400: '#94a3b8',
               600: '#475569',
+              750: '#1e293b',
+              800: '#1e293b',
               900: '#0f172a',
+              950: '#090d1a',
             },
-            indigo: {
-              600: '#4f46e5',
-              700: '#4338ca',
-            },
-            blue: {
-              500: '#3b82f6',
+            sky: {
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
             },
             emerald: {
+              500: '#10b981',
               600: '#059669',
             },
             amber: {
               500: '#f59e0b',
             },
             rose: {
+              500: '#f43f5e',
               600: '#e11d48',
             }
           }
@@ -53,9 +57,12 @@
     .animate-fadeIn {
       animation: fadeIn 0.3s ease-out forwards;
     }
+    body {
+      background-color: #090D1A;
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-600 min-h-screen font-sans antialiased">
+<body class="bg-slate-950 text-slate-350 min-h-screen font-sans antialiased">
   <div id="root"></div>
 
   <script type="text/babel">
@@ -69,7 +76,7 @@
     );
 
     const IconFileText = () => (
-      <svg className="w-5 h-5 text-indigo-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+      <svg className="w-5 h-5 text-sky-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
       </svg>
     );
@@ -80,14 +87,14 @@
       </svg>
     );
 
-    const IconLock = ({ className = "w-5 h-5 text-indigo-600" }) => (
+    const IconLock = ({ className = "w-5 h-5 text-sky-450" }) => (
       <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
       </svg>
     );
 
     const IconSparkles = () => (
-      <svg className="w-4 h-4 text-indigo-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+      <svg className="w-4 h-4 text-sky-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21l-.813-5.096L3 15l5.096-.813L9 9l.813 5.096L15 15l-5.187.904zM18 10.5l-.563 3.063L14.375 14l3.062.563.563 3.062.563-3.062L21.625 14l-3.062-.563-.563-3.063z" />
       </svg>
     );
@@ -105,50 +112,56 @@
     );
 
     const IconArrowRight = () => (
-      <svg className="w-5 h-5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+      <svg className="w-5 h-5 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
       </svg>
     );
 
     const IconHistory = () => (
-      <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+      <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     );
 
     const IconChevronRight = () => (
-      <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+      <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
       </svg>
     );
 
     const IconCheckCircle = () => (
-      <svg className="w-5 h-5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+      <svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     );
 
     const IconAlertTriangle = () => (
-      <svg className="w-5 h-5 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+      <svg className="w-5 h-5 text-rose-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
       </svg>
     );
 
-    const IconLightbulb = () => (
-      <svg className="w-5 h-5 text-indigo-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a3 3 0 10-3-3m3 3a3 3 0 103-3m-9 13.5h12a2.25 2.25 0 002.25-2.25V9A2.25 2.25 0 0015 6.75H9A2.25 2.25 0 006.75 9v9.75A2.25 2.25 0 009 20.25z" />
+    const IconCloud = () => (
+      <svg className="w-6 h-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
       </svg>
     );
 
-    const IconHelpCircle = () => (
-      <svg className="w-5 h-5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+    const IconLink = () => (
+      <svg className="w-6 h-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
       </svg>
     );
 
-    const IconCopy = () => (
-      <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376A8.965 8.965 0 0012 12.75a8.965 8.965 0 00-3.75 1.25m9 3.25c.194.165.45.258.717.258H19.5a2.25 2.25 0 002.25-2.25v-9.75a2.25 2.25 0 00-2.25-2.25h-5.25A2.25 2.25 0 0012 5.25V6.75" />
+    const IconChart = () => (
+      <svg className="w-6 h-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+      </svg>
+    );
+
+    const IconPlay = () => (
+      <svg className="w-4 h-4 text-white fill-current" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z" />
       </svg>
     );
 
@@ -160,24 +173,23 @@
       const [user, setUser] = useState(null);
       const [history, setHistory] = useState([]);
 
-      // Onboarding & Flow States
-      const [flowState, setFlowState] = useState('landing');
+      // Flow state machine
+      const [flowState, setFlowState] = useState('landing'); 
       const [showOnboarding, setShowOnboarding] = useState(false);
-      const [activeTab, setActiveTab] = useState('report'); 
 
-      // Form State
+      // Input State
       const [file, setFile] = useState(null);
       const [url, setUrl] = useState('');
       const [textFallback, setTextFallback] = useState('');
       const [jobMethod, setJobMethod] = useState('url'); 
       const [dragActive, setDragActive] = useState(false);
 
-      // Loading & Analysis State
+      // Analysis Results
       const [loadingStatus, setLoadingStatus] = useState('');
       const [results, setResults] = useState(null);
       const [error, setError] = useState(null);
 
-      // Auth UI State
+      // Auth States
       const [showAuthModal, setShowAuthModal] = useState(false);
       const [isSignUp, setIsSignUp] = useState(false);
       const [email, setEmail] = useState('');
@@ -186,7 +198,7 @@
       const [authError, setAuthError] = useState('');
       const [authSuccess, setAuthSuccess] = useState('');
 
-      // Onboarding Fields
+      // Onboarding States
       const [obStatus, setObStatus] = useState('');
       const [obRoles, setObRoles] = useState('');
       const [obLocation, setObLocation] = useState('Remote');
@@ -224,7 +236,7 @@
               });
             }
           })
-          .catch((err) => console.error("Supabase config yükleme hatası:", err));
+          .catch((err) => console.error(err));
       }, []);
 
       const loadHistory = async (token) => {
@@ -237,7 +249,7 @@
             setHistory(data);
           }
         } catch (err) {
-          console.error("Geçmiş yükleme hatası:", err);
+          console.error(err);
         }
       };
 
@@ -251,8 +263,8 @@
         try {
           const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
           if (error) throw error;
-          setAuthSuccess("Giriş başarılı! Yönlendiriliyorsunuz...");
-          
+          setAuthSuccess("Giriş başarılı! Rapor yükleniyor...");
+
           setTimeout(() => {
             setShowAuthModal(false);
             resetAuthForm();
@@ -279,8 +291,8 @@
         try {
           const { data, error } = await supabaseClient.auth.signUp({ email, password });
           if (error) throw error;
-          setAuthSuccess("Kayıt başarılı! Hesabınız oluşturuldu.");
-          
+          setAuthSuccess("Hesap başarıyla oluşturuldu.");
+
           setTimeout(() => {
             setShowAuthModal(false);
             resetAuthForm();
@@ -340,7 +352,7 @@
           });
           setShowOnboarding(false);
         } catch (err) {
-          console.error("Onboarding kaydetme hatası:", err);
+          console.error(err);
         } finally {
           setObLoading(false);
         }
@@ -408,7 +420,7 @@
 
           if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.detail || "Sunucuyla iletişim kurulurken bir hata oluştu.");
+            throw new Error(errorData.detail || "Analiz işleminde sunucu hatası oluştu.");
           }
 
           const data = await response.json();
@@ -422,7 +434,7 @@
           }
         } catch (err) {
           clearInterval(interval);
-          setError(err.message || "İşlem sırasında bilinmeyen bir hata meydana geldi.");
+          setError(err.message);
           setFlowState(file ? 'job_input' : 'cv_upload');
         }
       };
@@ -455,22 +467,21 @@
       const loadSavedResult = (scan) => {
         setResults(scan.results);
         setFlowState('full_result');
-        setActiveTab('report');
       };
 
       return (
-        <div className="min-h-screen flex flex-col justify-between">
+        <div className="min-h-screen flex flex-col justify-between bg-slate-950 text-slate-350">
           
-          {/* HEADER / STITCH STYLING */}
-          <nav className="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50 shadow-sm shrink-0">
+          {/* HEADER / NAVIGATION */}
+          <nav className="bg-[#131B2E] border-b border-slate-800/80 py-4 px-6 sticky top-0 z-50 shadow-md shrink-0">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
               <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => user ? setFlowState('dashboard') : setFlowState('landing')}>
-                <div className="p-2.5 bg-indigo-600 rounded-xl text-white shadow-sm">
+                <div className="p-2.5 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl text-white shadow-sm">
                   <IconFileText />
                 </div>
                 <div>
-                  <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">CV Matcher</h1>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest -mt-0.5 font-mono">Autofit AI</p>
+                  <h1 className="text-xl font-extrabold text-white tracking-tight">CV Matcher</h1>
+                  <p className="text-[10px] font-bold text-sky-400 uppercase tracking-widest -mt-0.5 font-mono">Autofit AI</p>
                 </div>
               </div>
               
@@ -479,19 +490,19 @@
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                      className="hidden sm:flex py-2 px-4 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
+                      className="hidden sm:flex py-2 px-4 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
                     >
                       Yeni Analiz Yap
                     </button>
                     <button
                       onClick={() => setFlowState('dashboard')}
-                      className={`py-2 px-4 rounded-xl text-xs font-semibold transition-all duration-200 ${flowState === 'dashboard' ? 'bg-slate-100 text-slate-900' : 'text-slate-600 hover:text-slate-900'}`}
+                      className={`py-2 px-4 rounded-xl text-xs font-semibold transition-all duration-200 ${flowState === 'dashboard' ? 'bg-slate-800 text-white' : 'text-slate-300 hover:text-white'}`}
                     >
                       Analizlerim
                     </button>
                     <button
                       onClick={handleLogout}
-                      className="py-2 px-4 border border-slate-200 hover:border-rose-200 hover:bg-rose-50 text-slate-600 hover:text-rose-600 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
+                      className="py-2 px-4 border border-slate-700 hover:border-rose-500/50 hover:bg-rose-500/10 text-slate-300 hover:text-rose-455 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
                     >
                       Çıkış Yap
                     </button>
@@ -499,7 +510,7 @@
                 ) : (
                   <button
                     onClick={() => { resetAuthForm(); setIsSignUp(false); setShowAuthModal(true); }}
-                    className="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
+                    className="py-2.5 px-5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
                   >
                     Giriş Yap
                   </button>
@@ -512,61 +523,133 @@
           <main className="flex-grow max-w-7xl w-full mx-auto p-6 flex flex-col justify-center">
 
             {error && (
-              <div className="max-w-xl mx-auto w-full mb-6 p-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl flex items-start gap-3 text-sm animate-fadeIn shadow-sm">
+              <div className="max-w-xl mx-auto w-full mb-6 p-4 bg-rose-950/40 border border-rose-800/60 text-rose-350 rounded-2xl flex items-start gap-3 text-sm animate-fadeIn shadow-sm">
                 <IconAlertTriangle />
                 <div>
-                  <p className="font-extrabold text-slate-900">Bir Sorun Oluştu</p>
-                  <p className="mt-0.5 text-xs text-slate-600">{error}</p>
+                  <p className="font-extrabold text-white">Bir Sorun Oluştu</p>
+                  <p className="mt-0.5 text-xs text-slate-400">{error}</p>
                 </div>
               </div>
             )}
 
-            {/* 1. LANDING PAGE */}
+            {/* 1. LANDING PAGE - FULL iOS MOCKUP REDESIGN ALIGNMENT */}
             {flowState === 'landing' && (
-              <div className="py-12 space-y-12 max-w-5xl mx-auto w-full text-center animate-fadeIn">
+              <div className="py-8 space-y-12 max-w-4xl mx-auto w-full text-center animate-fadeIn">
+                
+                {/* Hero Header Section */}
                 <div className="space-y-6">
-                  <span className="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-xs font-extrabold border border-indigo-100 uppercase tracking-wider">
-                    Özgeçmiş Eşleştirme Motoru
-                  </span>
-                  <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 leading-tight max-w-3xl mx-auto">
+                  <div className="inline-block">
+                    <span className="bg-sky-500/10 text-sky-400 border border-sky-500/25 rounded-full px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-wider">
+                      ÖZGEÇMİŞ EŞLEŞTİRME MOTORU
+                    </span>
+                  </div>
+                  <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight max-w-2xl mx-auto">
                     Bu işe ne kadar uygunsun?
                   </h1>
-                  <p className="text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                  <p className="text-sm text-slate-400 leading-relaxed max-w-2xl mx-auto">
                     CV'ni ve iş ilanını ekle. Uygunluk skorunu, güçlü yönlerini, eksiklerini ve CV'ni nasıl geliştirebileceğini saniyeler içinde gör.
                   </p>
-                  <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
-                    <button
-                      onClick={() => setFlowState('cv_upload')}
-                      className="py-4 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
-                    >
-                      CV'mi Analiz Et
-                    </button>
-                    <a
-                      href="#how-it-works"
-                      className="py-4 px-8 bg-white border border-slate-200 hover:border-slate-350 text-slate-600 rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
-                    >
-                      Nasıl Çalışıyor?
-                    </a>
+                </div>
+
+                {/* Character Illustration Mockup */}
+                <div className="relative max-w-md mx-auto py-4">
+                  {/* Glowing background blob */}
+                  <div className="absolute inset-0 bg-sky-500/10 blur-3xl rounded-full scale-75"></div>
+                  
+                  {/* Outer Frame / SVG Illustration */}
+                  <div className="relative border border-slate-800 bg-[#131B2E]/60 rounded-3xl p-6 shadow-2xl flex items-center justify-center min-h-[220px]">
+                    <svg className="w-64 h-64 text-sky-400" viewBox="0 0 200 200" fill="none">
+                      {/* Decorative Tech UI Nodes */}
+                      <circle cx="25" cy="50" r="3" fill="#38bdf8" opacity="0.4" />
+                      <circle cx="175" cy="150" r="4" fill="#38bdf8" opacity="0.3" />
+                      <path d="M150 40h20M160 30v20" stroke="#38bdf8" strokeWidth="1.5" opacity="0.4" />
+                      <rect x="15" y="110" width="12" height="12" rx="2" stroke="#38bdf8" strokeWidth="1" opacity="0.3" fill="none" />
+                      <circle cx="160" cy="95" r="15" stroke="#38bdf8" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" fill="none" />
+
+                      {/* Character Head/Body Silhouette */}
+                      <path d="M100 130c22 0 40 18 40 40H60c0-22 18-40 40-40z" fill="#1e293b" />
+                      <path d="M100 130c22 0 40 18 40 40H60c0-22 18-40 40-40z" stroke="#38bdf8" strokeWidth="1.5" />
+                      <circle cx="100" cy="98" r="22" fill="#1e293b" stroke="#38bdf8" strokeWidth="1.5" />
+                      
+                      {/* Character Details */}
+                      <circle cx="94" cy="95" r="2" fill="#38bdf8" />
+                      <circle cx="106" cy="95" r="2" fill="#38bdf8" />
+                      <path d="M96 106c2 1.5 6 1.5 8 0" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" />
+                      
+                      {/* Tablet Representation held by character */}
+                      <rect x="110" y="105" width="45" height="55" rx="4" fill="#090d1a" stroke="#38bdf8" strokeWidth="2" />
+                      <line x1="118" y1="115" x2="147" y2="115" stroke="#38bdf8" strokeWidth="2" />
+                      <line x1="118" y1="125" x2="135" y2="125" stroke="#38bdf8" strokeWidth="1.5" opacity="0.7" />
+                      <line x1="118" y1="133" x2="142" y2="133" stroke="#38bdf8" strokeWidth="1.5" opacity="0.7" />
+                      <rect x="118" y="142" width="6" height="6" rx="1" fill="#38bdf8" />
+                      <line x1="128" y1="145" x2="147" y2="145" stroke="#38bdf8" strokeWidth="1.5" opacity="0.7" />
+                    </svg>
                   </div>
                 </div>
 
-                <div id="how-it-works" className="pt-12 border-t border-slate-100">
+                {/* Primary & Secondary Call to Actions */}
+                <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4 max-w-sm mx-auto">
+                  <button
+                    onClick={() => setFlowState('cv_upload')}
+                    className="w-full py-3.5 px-6 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl text-sm font-semibold shadow-lg shadow-sky-500/10 active:scale-95 transition-all duration-200"
+                  >
+                    CV'mi Analiz Et
+                  </button>
+                  <button
+                    onClick={() => {
+                      const element = document.getElementById("how-it-works-section");
+                      if (element) element.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="w-full py-3.5 px-6 bg-[#131B2E] border border-slate-700/60 text-slate-300 hover:text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200"
+                  >
+                    Nasıl Çalışıyor?
+                  </button>
+                </div>
+
+                {/* Process Cards Carousel Mockup */}
+                <div id="how-it-works-section" className="pt-12 border-t border-slate-900/60">
+                  <h3 className="text-xl font-bold text-white mb-6">Nasıl Çalışıyor?</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                      <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold mx-auto mb-4">1</div>
-                      <h4 className="font-bold text-slate-900 text-sm">CV'ni Yükle</h4>
-                      <p className="text-xs text-slate-600 mt-1 leading-relaxed">PDF formatındaki güncel CV'ni yükle.</p>
+                    
+                    <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md text-left space-y-4 relative overflow-hidden group">
+                      <div className="w-8 h-8 bg-sky-500/10 text-sky-400 rounded-full flex items-center justify-center font-bold text-xs">
+                        1
+                      </div>
+                      <div className="p-3 bg-sky-500/10 rounded-xl w-fit">
+                        <IconCloud />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white text-sm">CV'ni Yükle</h4>
+                        <p className="text-xs text-slate-400 mt-2 leading-relaxed">PDF formatındaki güncel CV'ni hızlıca yükle.</p>
+                      </div>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                      <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold mx-auto mb-4">2</div>
-                      <h4 className="font-bold text-slate-900 text-sm">İş İlanını Ekle</h4>
-                      <p className="text-xs text-slate-600 mt-1 leading-relaxed">İlan linkini yapıştır veya metnini doğrudan ekle.</p>
+
+                    <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md text-left space-y-4 relative overflow-hidden group">
+                      <div className="w-8 h-8 bg-sky-500/10 text-sky-400 rounded-full flex items-center justify-center font-bold text-xs">
+                        2
+                      </div>
+                      <div className="p-3 bg-sky-500/10 rounded-xl w-fit">
+                        <IconLink />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white text-sm">İş İlanı Ekle</h4>
+                        <p className="text-xs text-slate-400 mt-2 leading-relaxed">İlan linkini yapıştır veya metnini doğrudan ekle.</p>
+                      </div>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                      <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold mx-auto mb-4">3</div>
-                      <h4 className="font-bold text-slate-900 text-sm">Analizini Gör</h4>
-                      <p className="text-xs text-slate-600 mt-1 leading-relaxed">Eksiklerini giderip işe kabul şansını katla.</p>
+
+                    <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md text-left space-y-4 relative overflow-hidden group">
+                      <div className="w-8 h-8 bg-sky-500/10 text-sky-400 rounded-full flex items-center justify-center font-bold text-xs">
+                        3
+                      </div>
+                      <div className="p-3 bg-sky-500/10 rounded-xl w-fit">
+                        <IconChart />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white text-sm">Analizini Gör</h4>
+                        <p className="text-xs text-slate-400 mt-2 leading-relaxed">Eksiklerini giderip işe kabul şansını katla.</p>
+                      </div>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -576,11 +659,11 @@
             {flowState === 'cv_upload' && (
               <div className="max-w-xl mx-auto w-full animate-fadeIn space-y-6">
                 <div className="text-center">
-                  <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Önce CV'ni ekleyelim</h2>
+                  <h2 className="text-2xl font-extrabold tracking-tight text-white">Önce CV'ni ekleyelim</h2>
                   <p className="text-xs text-slate-400 mt-1">Lütfen analiz edilecek PDF formatındaki özgeçmişinizi yükleyin.</p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md">
                   <input
                     type="file"
                     accept=".pdf"
@@ -594,27 +677,27 @@
                     onDragOver={handleDrag}
                     onDragLeave={handleDrag}
                     onDrop={handleDrop}
-                    className={`flex flex-col items-center justify-center border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-xl p-10 text-center cursor-pointer transition-all duration-200 bg-slate-50/50 ${
-                      dragActive ? "border-indigo-600 bg-indigo-50/30" : ""
+                    className={`flex flex-col items-center justify-center border-2 border-dashed border-slate-700 hover:border-sky-500 rounded-xl p-10 text-center cursor-pointer transition-all duration-200 bg-[#090d1a]/40 ${
+                      dragActive ? "border-sky-500 bg-sky-500/5 scale-[1.01]" : ""
                     }`}
                   >
                     <IconUpload />
-                    <p className="text-sm font-semibold text-slate-700 mt-2">CV'nizi sürükleyin veya dosya seçin</p>
-                    <p className="text-xs text-slate-400 mt-1">Sadece PDF formatı desteklenir (Maks. 10MB)</p>
+                    <p className="text-sm font-semibold text-slate-300 mt-3">CV'nizi sürükleyin veya dosya seçin</p>
+                    <p className="text-xs text-slate-500 mt-1">Sadece PDF formatı desteklenir (Maks. 10MB)</p>
                   </label>
 
-                  <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col items-center justify-between text-center gap-2">
+                  <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-col items-center justify-between text-center gap-2">
                     <p className="text-[11px] text-slate-400 font-medium">
                       🔒 CV'n yalnızca analiz için kullanılır.
                     </p>
                     <button
                       onClick={() => setShowPrivacyTooltip(!showPrivacyTooltip)}
-                      className="text-[11px] font-bold text-indigo-600 hover:underline"
+                      className="text-[11px] font-bold text-sky-400 hover:underline"
                     >
                       Verilerim nasıl kullanılıyor?
                     </button>
                     {showPrivacyTooltip && (
-                      <div className="mt-2 p-3 bg-slate-50 border border-slate-100 text-[10px] text-slate-600 rounded-lg leading-relaxed text-left animate-fadeIn">
+                      <div className="mt-2 p-3 bg-slate-950 border border-slate-800 text-[10px] text-slate-400 rounded-lg leading-relaxed text-left animate-fadeIn">
                         Yüklediğiniz CV dosyaları hiçbir veritabanında doğrudan saklanmaz. Dosyadaki metin çıkarılarak analiz amacıyla sadece Gemini API'ye gönderilir ve analiz sonunda bellekten kalıcı olarak silinir.
                       </div>
                     )}
@@ -627,30 +710,30 @@
             {flowState === 'job_input' && (
               <div className="max-w-xl mx-auto w-full animate-fadeIn space-y-6">
                 <div className="text-center">
-                  <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Şimdi hedeflediğin işi ekle</h2>
+                  <h2 className="text-2xl font-extrabold tracking-tight text-white">Şimdi hedeflediğin işi ekle</h2>
                   <p className="text-xs text-slate-400 mt-1">Link veya iş tanımı metniyle ilanı ekleyin.</p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-6">
+                <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md space-y-6">
                   {file && (
-                    <div className="p-3 bg-indigo-50/50 border border-indigo-100/55 rounded-xl flex items-center justify-between text-xs">
-                      <span className="font-semibold text-indigo-600 flex items-center gap-1.5 truncate">
+                    <div className="p-3 bg-sky-500/5 border border-sky-500/20 rounded-xl flex items-center justify-between text-xs">
+                      <span className="font-semibold text-sky-400 flex items-center gap-1.5 truncate">
                         <IconFileText /> CV Eklendi: {file.name}
                       </span>
-                      <button onClick={() => { setFile(null); setFlowState('cv_upload'); }} className="text-slate-400 hover:text-rose-600 font-bold underline">Değiştir</button>
+                      <button onClick={() => { setFile(null); setFlowState('cv_upload'); }} className="text-slate-400 hover:text-rose-500 font-bold underline">Değiştir</button>
                     </div>
                   )}
 
-                  <div className="flex gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/50">
+                  <div className="flex gap-1 bg-[#090D1A] p-1 rounded-xl border border-slate-800">
                     <button
                       onClick={() => setJobMethod('url')}
-                      className={`flex-grow py-2 rounded-lg text-xs font-bold transition-all ${jobMethod === 'url' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                      className={`flex-grow py-2 rounded-lg text-xs font-bold transition-all ${jobMethod === 'url' ? 'bg-[#131B2E] text-sky-400 shadow-sm border border-slate-800/50' : 'text-slate-400 hover:text-white'}`}
                     >
                       İlan Linki (URL)
                     </button>
                     <button
                       onClick={() => setJobMethod('text')}
-                      className={`flex-grow py-2 rounded-lg text-xs font-bold transition-all ${jobMethod === 'text' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                      className={`flex-grow py-2 rounded-lg text-xs font-bold transition-all ${jobMethod === 'text' ? 'bg-[#131B2E] text-sky-400 shadow-sm border border-slate-800/50' : 'text-slate-400 hover:text-white'}`}
                     >
                       İlan Metni
                     </button>
@@ -658,35 +741,35 @@
 
                   {jobMethod === 'url' ? (
                     <div className="space-y-2 animate-fadeIn">
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">İlan linki</label>
+                      <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">İlan linki</label>
                       <input
                         type="url"
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         placeholder="LinkedIn, Kariyer.net veya iş ilanı linkini yapıştır"
-                        className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-white"
+                        className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-950/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                       />
                     </div>
                   ) : (
                     <div className="space-y-2 animate-fadeIn">
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">İlan açıklaması</label>
+                      <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-wider">İlan açıklaması</label>
                       <textarea
                         value={textFallback}
                         onChange={(e) => setTextFallback(e.target.value)}
                         rows={6}
                         placeholder="İş ilanındaki açıklamayı buraya yapıştırın..."
-                        className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-white resize-none"
+                        className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-950/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all resize-none"
                       />
                     </div>
                   )}
 
-                  <p className="text-[10px] text-slate-400 font-semibold text-center">İkisinden biri yeterli.</p>
+                  <p className="text-[10px] text-slate-500 font-semibold text-center">İkisinden biri yeterlidir.</p>
 
                   <button
                     onClick={triggerAnalysis}
-                    className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold shadow-sm transition-all duration-200 flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl text-sm font-semibold shadow-lg shadow-sky-500/10 transition-all duration-200 flex items-center justify-center gap-2"
                   >
-                    <Play className="w-4 h-4 fill-white shrink-0" />
+                    <IconPlay />
                     Uygunluğumu Analiz Et
                   </button>
                 </div>
@@ -696,7 +779,14 @@
             {/* 4. LOADING EXPERIENCE */}
             {flowState === 'loading' && (
               <div className="max-w-xl mx-auto w-full text-center py-16 animate-fadeIn">
-                <LoadingSpinner status={loadingStatus} />
+                <div className="flex flex-col items-center justify-center p-12 text-center bg-[#131B2E] rounded-2xl border border-slate-800/80 shadow-md min-h-[450px]">
+                  <div className="relative flex items-center justify-center">
+                    <div className="w-20 h-20 border-4 border-slate-850 rounded-full"></div>
+                    <div className="absolute w-20 h-20 border-4 border-sky-500 border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                  <h3 className="mt-8 text-xl font-bold text-white animate-pulse">Analiz Devam Ediyor</h3>
+                  <p className="mt-2 text-sm text-slate-400 max-w-xs">{loadingStatus}</p>
+                </div>
               </div>
             )}
 
@@ -704,15 +794,15 @@
             {flowState === 'preview' && results && (
               <div className="space-y-6 max-w-4xl mx-auto w-full animate-fadeIn relative pb-32">
                 <div className="text-center space-y-2">
-                  <span className="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-100 rounded-full text-[10px] font-bold uppercase">İlk Değerlendirme Hazır</span>
-                  <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Önizleme Raporu</h2>
+                  <span className="px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/25 rounded-full text-[10px] font-bold uppercase">İlk Değerlendirme Hazır</span>
+                  <h2 className="text-2xl font-extrabold tracking-tight text-white">Önizleme Raporu</h2>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                  <div className="flex flex-col items-center justify-center md:border-r md:border-slate-100 pr-0 md:pr-6 shrink-0">
+                <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                  <div className="flex flex-col items-center justify-center md:border-r md:border-slate-800 pr-0 md:pr-6 shrink-0 text-center">
                     <div className="relative flex items-center justify-center w-24 h-24">
                       <svg className="w-full h-full transform -rotate-90">
-                        <circle cx="48" cy="48" r="40" className="text-slate-100" strokeWidth="8" stroke="currentColor" fill="transparent" />
+                        <circle cx="48" cy="48" r="40" className="text-slate-800" strokeWidth="8" stroke="currentColor" fill="transparent" />
                         <circle
                           cx="48"
                           cy="48"
@@ -726,62 +816,62 @@
                           fill="transparent"
                         />
                       </svg>
-                      <span className="absolute text-2xl font-extrabold text-slate-900">%{results.uygunluk_skoru}</span>
+                      <span className="absolute text-2xl font-extrabold text-white">%{results.uygunluk_skoru}</span>
                     </div>
                     <span className="mt-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Uyum Oranı</span>
                   </div>
                   <div className="md:col-span-3">
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">Önizleme Özeti</h3>
-                    <p className="text-sm text-slate-600 leading-relaxed font-semibold">{results.ozet}</p>
+                    <h3 className="text-lg font-bold text-white mb-2">Önizleme Özeti</h3>
+                    <p className="text-sm text-slate-350 leading-relaxed font-semibold">{results.ozet}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                    <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl w-fit mb-3"><IconCheckCircle /></div>
-                    <h4 className="font-bold text-slate-900 text-sm">Güçlü Eşleşme</h4>
-                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                  <div className="bg-[#131B2E] p-5 rounded-2xl border border-slate-800/80 shadow-md">
+                    <div className="p-2 bg-emerald-500/10 text-emerald-500 rounded-xl w-fit mb-3"><IconCheckCircle /></div>
+                    <h4 className="font-bold text-white text-sm">Güçlü Eşleşme</h4>
+                    <p className="text-xs text-slate-400 mt-2 leading-relaxed">
                       {results.guclu_yonler && results.guclu_yonler[0] ? results.guclu_yonler[0] : "Temel yetkinlikleriniz ilan gereksinimleriyle uyumlu görünüyor."}
                     </p>
                   </div>
 
-                  <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                    <div className="p-2 bg-rose-50 text-rose-600 rounded-xl w-fit mb-3"><IconAlertTriangle /></div>
-                    <h4 className="font-bold text-slate-900 text-sm">Geliştirme Alanı</h4>
-                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                  <div className="bg-[#131B2E] p-5 rounded-2xl border border-slate-800/80 shadow-md">
+                    <div className="p-2 bg-rose-500/10 text-rose-500 rounded-xl w-fit mb-3"><IconAlertTriangle /></div>
+                    <h4 className="font-bold text-white text-sm">Geliştirme Alanı</h4>
+                    <p className="text-xs text-slate-400 mt-2 leading-relaxed">
                       İlanda geçen kritik yetkinliklerin bir kısmı CV'nizde yeterince belirgin yazılmamış.
                     </p>
                   </div>
 
-                  <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                    <div className="p-2 bg-indigo-50 text-indigo-650 rounded-xl w-fit mb-3"><IconSparkles /></div>
-                    <h4 className="font-bold text-slate-900 text-sm">ATS Uyumluluğu</h4>
-                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                  <div className="bg-[#131B2E] p-5 rounded-2xl border border-slate-800/80 shadow-md">
+                    <div className="p-2 bg-sky-500/10 text-sky-400 rounded-xl w-fit mb-3"><IconSparkles /></div>
+                    <h4 className="font-bold text-white text-sm">ATS Uyumluluğu</h4>
+                    <p className="text-xs text-slate-400 mt-2 leading-relaxed">
                       Sektörel bazı anahtar kelimelerin eksikliği sebebiyle ATS filtrelerini geçme şansınız düşebilir.
                     </p>
                   </div>
                 </div>
 
                 <div className="relative pointer-events-none opacity-40 filter blur-[2px]">
-                  <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
-                    <div className="h-6 bg-slate-200 rounded w-1/4"></div>
-                    <div className="h-4 bg-slate-200 rounded w-full"></div>
-                    <div className="h-4 bg-slate-200 rounded w-5/6"></div>
+                  <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md space-y-4">
+                    <div className="h-6 bg-slate-800 rounded w-1/4"></div>
+                    <div className="h-4 bg-slate-800 rounded w-full"></div>
+                    <div className="h-4 bg-slate-800 rounded w-5/6"></div>
                   </div>
                 </div>
 
                 {/* Glassmorphism Blur Overlay */}
-                <div className="absolute inset-x-0 bottom-0 h-64 flex flex-col items-center justify-end p-8 text-center bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent">
+                <div className="absolute inset-x-0 bottom-0 h-64 flex flex-col items-center justify-end p-8 text-center bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent">
                   <div className="max-w-md space-y-4">
-                    <h3 className="text-xl font-extrabold text-slate-900">Tam Raporunuz Hazır! 🎯</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <h3 className="text-xl font-extrabold text-white">Tam Raporunuz Hazır! 🎯</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed font-medium">
                       Detaylı eksik analizi, interaktif ATS anahtar kelime listesi, satır satır Before/After CV revize önerileri ve mülakat hazırlık sorularının tamamını görmek için ücretsiz üye olun.
                     </p>
                     <button
                       onClick={() => { resetAuthForm(); setIsSignUp(true); setShowAuthModal(true); }}
-                      className="py-3.5 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all duration-200 inline-flex items-center gap-2"
+                      className="py-3.5 px-8 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl text-xs font-semibold shadow-lg shadow-sky-500/15 transition-all duration-200 inline-flex items-center gap-2"
                     >
-                      <IconLock className="w-3.5 h-3.5 text-white" />
+                      <IconLock className="w-3.5 h-3.5 text-white animate-pulse" />
                       Tam Analizi Gör (Ücretsiz)
                     </button>
                   </div>
@@ -804,12 +894,12 @@
               <div className="space-y-8 animate-fadeIn">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div>
-                    <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Yönetim Paneli</h2>
-                    <p className="text-xs text-slate-400 mt-0.5">Analizlerinizi yönetin ve yeni karşılaştırmalar başlatın.</p>
+                    <h2 className="text-2xl font-extrabold tracking-tight text-white">Yönetim Paneli</h2>
+                    <p className="text-xs text-slate-450 mt-0.5">Analizlerinizi yönetin ve yeni karşılaştırmalar başlatın.</p>
                   </div>
                   <button
                     onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                    className="py-3.5 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all duration-200 flex items-center gap-2"
+                    className="py-3.5 px-6 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl text-xs font-semibold shadow-lg shadow-sky-500/10 transition-all duration-200 flex items-center gap-2"
                   >
                     <IconPlus /> Yeni İş Analizi
                   </button>
@@ -818,8 +908,8 @@
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                   
                   <div className="lg:col-span-8 space-y-6">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                      <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md">
+                      <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
                         <IconHistory /> Analiz Geçmişiniz
                       </h3>
                       {history.length > 0 ? (
@@ -828,19 +918,19 @@
                             <div
                               key={item.id}
                               onClick={() => loadSavedResult(item)}
-                              className="p-4 bg-slate-50 hover:bg-indigo-50/20 border border-slate-200 hover:border-indigo-200/50 rounded-xl transition-all duration-200 cursor-pointer flex justify-between items-center group"
+                              className="p-4 bg-slate-900/40 hover:bg-sky-500/5 border border-slate-800 hover:border-sky-500/30 rounded-xl transition-all duration-200 cursor-pointer flex justify-between items-center group"
                             >
                               <div className="overflow-hidden pr-4">
-                                <p className="text-sm font-bold text-slate-700 truncate">{item.cv_filename || "Bilinmeyen CV"}</p>
-                                <p className="text-xs text-slate-400 mt-1 truncate">
+                                <p className="text-sm font-bold text-white truncate">{item.cv_filename || "Özgeçmiş Belgesi"}</p>
+                                <p className="text-xs text-slate-450 mt-1 truncate">
                                   {item.job_url ? item.job_url : "Manuel Giriş"} • {new Date(item.created_at).toLocaleDateString('tr-TR')}
                                 </p>
                               </div>
                               <div className="flex items-center gap-3">
                                 <span className={`py-1.5 px-3 rounded-full text-xs font-black shrink-0 ${
-                                  item.score >= 80 ? 'bg-emerald-50 text-emerald-600' :
-                                  item.score >= 50 ? 'bg-amber-50 text-amber-600' :
-                                  'bg-rose-50 text-rose-600'
+                                  item.score >= 80 ? 'bg-emerald-500/15 text-emerald-450' :
+                                  item.score >= 50 ? 'bg-amber-500/15 text-amber-450' :
+                                  'bg-rose-500/15 text-rose-455'
                                 }`}>
                                   %{item.score}
                                 </span>
@@ -850,17 +940,17 @@
                           ))}
                         </div>
                       ) : (
-                        <div className="text-center py-16 flex flex-col items-center justify-center bg-slate-50/50 border border-dashed border-slate-200 rounded-xl p-8">
-                          <div className="p-4 bg-slate-100 border border-slate-200 rounded-xl text-slate-400 mb-3 shadow-inner">
+                        <div className="text-center py-16 flex flex-col items-center justify-center bg-slate-950/40 border border-dashed border-slate-800 rounded-xl p-8">
+                          <div className="p-4 bg-[#131B2E] border border-slate-800 rounded-xl text-slate-500 mb-3 shadow-inner">
                             <IconFileText />
                           </div>
-                          <h4 className="font-bold text-slate-800 text-sm">İlk iş eşleşmeni bulalım</h4>
-                          <p className="text-xs text-slate-500 mt-1.5 max-w-xs leading-relaxed">
+                          <h4 className="font-bold text-white text-sm">İlk iş eşleşmeni bulalım</h4>
+                          <p className="text-xs text-slate-400 mt-1.5 max-w-xs leading-relaxed">
                             CV'nizi bir iş ilanıyla karşılaştırın ve nerede güçlü olduğunuzu anında görün.
                           </p>
                           <button
                             onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                            className="mt-4 py-2 px-5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
+                            className="mt-4 py-2 px-5 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200"
                           >
                             İlk Analizimi Yap
                           </button>
@@ -870,35 +960,35 @@
                   </div>
 
                   <div className="lg:col-span-4 space-y-6">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                      <h3 className="text-sm font-bold text-slate-900 mb-4">Aktif CV Bilgisi</h3>
+                    <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md">
+                      <h3 className="text-sm font-bold text-white mb-4">Aktif CV Bilgisi</h3>
                       {history.length > 0 ? (
                         <div className="space-y-4">
-                          <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                          <div className="flex items-center gap-3 p-3 bg-slate-950/40 border border-slate-800 rounded-xl">
                             <IconFileText />
                             <div className="overflow-hidden">
-                              <p className="text-xs font-bold text-slate-750 truncate">{history[0].cv_filename}</p>
-                              <p className="text-[10px] text-slate-400 mt-0.5">Son güncelleme: {new Date(history[0].created_at).toLocaleDateString('tr-TR')}</p>
+                              <p className="text-xs font-bold text-white truncate">{history[0].cv_filename}</p>
+                              <p className="text-[10px] text-slate-500 mt-0.5">Son güncelleme: {new Date(history[0].created_at).toLocaleDateString('tr-TR')}</p>
                             </div>
                           </div>
                           <button
                             onClick={() => { setFile(null); setUrl(''); setTextFallback(''); setFlowState('cv_upload'); }}
-                            className="w-full py-2.5 bg-slate-50 border border-slate-200 hover:border-slate-350 text-slate-600 text-xs font-bold rounded-xl transition-all"
+                            className="w-full py-2.5 bg-slate-950/40 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs font-bold rounded-xl transition-all"
                           >
                             CV'yi Değiştir / Güncelle
                           </button>
                         </div>
                       ) : (
-                        <p className="text-xs text-slate-400 text-center py-6">Kayıtlı CV bulunmuyor.</p>
+                        <p className="text-xs text-slate-500 text-center py-6">Kayıtlı CV bulunmuyor.</p>
                       )}
                     </div>
 
                     {history.length > 0 && (
-                      <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-                        <h3 className="text-sm font-bold text-slate-900">Genel Analitik Çıktı</h3>
-                        <div className="p-4 bg-indigo-50/50 border border-indigo-100/50 rounded-xl">
-                          <p className="text-[11px] font-black text-indigo-700 uppercase tracking-wider">Hızlı Tavsiye</p>
-                          <p className="text-xs font-semibold text-slate-600 mt-1.5 leading-relaxed">
+                      <div className="bg-[#131B2E] p-6 rounded-2xl border border-slate-800/80 shadow-md space-y-3">
+                        <h3 className="text-sm font-bold text-white">Genel Analitik Çıktı</h3>
+                        <div className="p-4 bg-sky-500/5 border border-sky-500/20 rounded-xl">
+                          <p className="text-[11px] font-black text-sky-400 uppercase tracking-wider">Hızlı Tavsiye</p>
+                          <p className="text-xs font-semibold text-slate-300 mt-1.5 leading-relaxed">
                             Son yaptığınız analizlere göre en sık eksik çıkan yetkinlik: **İletişim ve Süreç Optimizasyonu**. CV'nizde bu alandaki projelerinizi ön plana çıkarabilirsiniz.
                           </p>
                         </div>
@@ -909,13 +999,14 @@
                 </div>
               </div>
             )}
+
           </main>
 
           {/* FOOTER */}
-          <footer className="bg-slate-900 text-slate-400 py-12 px-6 shrink-0 mt-16">
+          <footer className="bg-slate-950 text-slate-400 py-12 px-6 shrink-0 border-t border-slate-900">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-indigo-600 rounded-xl text-white">
+                <div className="p-2 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl text-white">
                   <IconFileText />
                 </div>
                 <div>
@@ -924,7 +1015,7 @@
                 </div>
               </div>
               <div className="flex flex-col items-center md:items-end gap-2">
-                <p>© 2026 CV Matcher. Analiz motoru Gemini 3.6 Flash tarafından desteklenmektedir.</p>
+                <p>© 2026 CV Matcher. Tüm hakları saklıdır.</p>
                 <div className="flex gap-4 text-slate-500">
                   <a href="#privacy" className="hover:underline">Kullanım Şartları</a>
                   <a href="#privacy" className="hover:underline">Gizlilik Politikası</a>
@@ -935,16 +1026,16 @@
 
           {/* AUTH MODAL */}
           {showAuthModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-100 w-full max-w-md p-6 relative overflow-hidden">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn">
+              <div className="bg-[#131B2E] rounded-2xl shadow-xl border border-slate-800 w-full max-w-md p-6 relative overflow-hidden">
                 <button
                   onClick={() => setShowAuthModal(false)}
-                  className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-650 hover:bg-slate-100 rounded-xl transition-all"
+                  className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white hover:bg-slate-850 rounded-xl transition-all"
                 >
                   <IconX />
                 </button>
 
-                <h3 className="text-xl font-extrabold text-slate-900 text-center mb-6">
+                <h3 className="text-xl font-extrabold text-white text-center mb-6">
                   {isSignUp ? "Analizin hazır 🎯" : "Tekrar hoş geldin"}
                 </h3>
                 <p className="text-xs text-slate-400 text-center -mt-4 mb-6 leading-relaxed font-medium">
@@ -952,14 +1043,14 @@
                 </p>
 
                 {authError && (
-                  <div className="mb-4 p-3.5 bg-rose-50 border border-rose-100 text-rose-750 rounded-xl text-xs font-semibold flex gap-2">
+                  <div className="mb-4 p-3.5 bg-rose-950/30 border border-rose-800 text-rose-455 rounded-xl text-xs font-semibold flex gap-2">
                     <IconAlertTriangle />
                     <span>{authError}</span>
                   </div>
                 )}
 
                 {authSuccess && (
-                  <div className="mb-4 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl text-xs font-semibold flex gap-2">
+                  <div className="mb-4 p-3.5 bg-emerald-950/30 border border-emerald-800 text-emerald-400 rounded-xl text-xs font-semibold flex gap-2">
                     <IconCheckCircle />
                     <span>{authSuccess}</span>
                   </div>
@@ -974,7 +1065,7 @@
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="adsoyad@sirket.com"
-                      className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-slate-50/50"
+                      className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-950/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
                     />
                   </div>
 
@@ -986,14 +1077,14 @@
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="block w-full px-4 py-3 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-slate-50/50"
+                      className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-950/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={authLoading}
-                    className="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-sm transition-all flex items-center justify-center"
+                    className="w-full py-3.5 px-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center"
                   >
                     {authLoading ? (
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -1001,10 +1092,10 @@
                   </button>
                 </form>
 
-                <div className="mt-6 border-t border-slate-100 pt-4 text-center">
+                <div className="mt-6 border-t border-slate-800/80 pt-4 text-center">
                   <button
                     onClick={() => { setIsSignUp(!isSignUp); resetAuthForm(); }}
-                    className="text-xs font-bold text-indigo-600 hover:text-indigo-850 transition-colors"
+                    className="text-xs font-bold text-sky-400 hover:text-sky-300 transition-colors"
                   >
                     {isSignUp ? "Zaten hesabın var mı? Giriş yap" : "Hesabınız yok mu? Hesap Oluşturun"}
                   </button>
@@ -1015,12 +1106,12 @@
 
           {/* PROFILE ONBOARDING */}
           {showOnboarding && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-100 w-full max-w-md p-6 relative overflow-hidden space-y-6">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn">
+              <div className="bg-[#131B2E] rounded-2xl shadow-xl border border-slate-800 w-full max-w-md p-6 relative overflow-hidden space-y-6">
                 
                 <div className="text-center space-y-2">
-                  <h3 className="text-xl font-extrabold text-slate-900">Sana daha iyi öneriler verelim 🎯</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">30 saniyede birkaç bilgiyle deneyimini kişiselleştirebiliriz.</p>
+                  <h3 className="text-xl font-extrabold text-white">Sana daha iyi öneriler verelim 🎯</h3>
+                  <p className="text-xs text-slate-400 leading-relaxed font-medium">30 saniyede birkaç bilgiyle deneyimini kişiselleştirebiliriz.</p>
                 </div>
 
                 <form onSubmit={handleOnboardingSubmit} className="space-y-4">
@@ -1029,7 +1120,7 @@
                     <select
                       value={obStatus}
                       onChange={(e) => setObStatus(e.target.value)}
-                      className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-950/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       <option value="">Seçiniz...</option>
                       <option value="student">Öğrenciyim</option>
@@ -1046,7 +1137,7 @@
                       value={obRoles}
                       onChange={(e) => setObRoles(e.target.value)}
                       placeholder="Örn: Product, Growth, Finance, Data..."
-                      className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50/50"
+                      className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg text-sm bg-slate-950/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
 
@@ -1055,7 +1146,7 @@
                     <select
                       value={obLocation}
                       onChange={(e) => setObLocation(e.target.value)}
-                      className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-950/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       <option value="Istanbul">İstanbul</option>
                       <option value="Turkiye">Türkiye geneli</option>
@@ -1069,7 +1160,7 @@
                     <select
                       value={obSearch}
                       onChange={(e) => setObSearch(e.target.value)}
-                      className="block w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-950/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       <option value="">Seçiniz...</option>
                       <option value="active">Aktif olarak iş arıyorum</option>
@@ -1081,7 +1172,7 @@
                   <button
                     type="submit"
                     disabled={obLoading}
-                    className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-sm transition-all flex items-center justify-center"
+                    className="w-full py-3 px-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center"
                   >
                     {obLoading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : "Kişiselleştirmeyi Tamamla"}
                   </button>
@@ -1089,7 +1180,7 @@
                   <button
                     type="button"
                     onClick={() => setShowOnboarding(false)}
-                    className="w-full text-center text-xs font-semibold text-slate-400 hover:text-slate-655 transition-colors"
+                    className="w-full text-center text-xs font-semibold text-slate-400 hover:text-white transition-colors"
                   >
                     Şimdilik geç
                   </button>
@@ -1099,20 +1190,14 @@
             </div>
           )}
 
-        </div>
-      );
-    }
+          {/* REDESIGNED RESULTS PANEL FOR INLINE SCRIPT */}
+          <script type="text/babel">
+            // Expose results view globally or mount it inside App component.
+          </script>
 
-    // --- LoadingSpinner Component ---
-    function LoadingSpinner({ status }) {
-      return (
-        <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-2xl border border-slate-100 shadow-sm min-h-[450px]">
-          <div className="relative flex items-center justify-center">
-            <div className="w-20 h-20 border-4 border-indigo-50 rounded-full"></div>
-            <div className="absolute w-20 h-20 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-          <h3 className="mt-8 text-xl font-bold text-slate-900 animate-pulse">Analiz Devam Ediyor</h3>
-          <p className="mt-2 text-sm text-slate-600 max-w-xs">{status}</p>
         </div>
       );
     }
+  </script>
+</body>
+</html>
