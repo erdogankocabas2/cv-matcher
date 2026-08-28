@@ -52,3 +52,9 @@
   - `[x]` `backend/static/index.html` güncellemesi (Yeni landing, blur teaser perdesi, onboarding ve auth entegrasyonu)
   - `[x]` `frontend/src/App.jsx` güncellemesi (Adım sihirbazı durum makinesi, onboarding modal)
   - `[x]` Git commit & GitHub push
+- `[x]` Faz 6: Chrome Uzantısı (Side Panel API) Geliştirmesi
+  - `[x]` `extension/manifest.json` oluşturulması (Manifest V3 ve Side Panel tanımları)
+  - `[x]` `extension/background.js` oluşturulması (Oturum algılama ve mesajlaşma servisleri)
+  - `[x]` `extension/content.js` oluşturulması (LinkedIn ve Kariyer.net ilan okuma scripti)
+  - `[x]` `extension/sidepanel.html` ve `extension/sidepanel.js` oluşturulması (Karanlık tema yan panel arayüzü)
+  - `[x]` Web uygulamasından uzantıya güvenli token aktarımı entegrasyonu (`App.jsx` ve `index.html` güncellemeleri)

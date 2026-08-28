@@ -11,21 +11,34 @@ router = APIRouter()
 
 @router.post("")
 async def analyze(
-    cv_file: UploadFile = File(...),
+    cv_file: Optional[UploadFile] = File(None),
+    cv_text: Optional[str] = Form(None),
+    cv_filename: Optional[str] = Form(None),
     job_url: Optional[str] = Form(None),
     job_text_fallback: Optional[str] = Form(None),
     user = Depends(get_optional_user)
 ):
-    # Dosya tipi kontrolü (PDF)
-    if not cv_file.filename.lower().endswith(".pdf"):
-        raise HTTPException(
-            status_code=400, 
-            detail="Yalnızca PDF formatındaki CV'ler desteklenmektedir."
-        )
+    final_cv_text = ""
+    final_cv_filename = cv_filename or "CV.pdf"
 
-    # 1. CV Metnini Çıkar
-    cv_bytes = await cv_file.read()
-    cv_text = await extract_text_from_pdf(cv_bytes)
+    # 1. CV Metnini Elde Et
+    if cv_file:
+        # Dosya tipi kontrolü (PDF)
+        if not cv_file.filename.lower().endswith(".pdf"):
+            raise HTTPException(
+                status_code=400, 
+                detail="Yalnızca PDF formatındaki CV'ler desteklenmektedir."
+            )
+        cv_bytes = await cv_file.read()
+        final_cv_text = await extract_text_from_pdf(cv_bytes)
+        final_cv_filename = cv_file.filename
+    elif cv_text and cv_text.strip():
+        final_cv_text = cv_text
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail="Lütfen bir CV dosyası yükleyin veya CV metnini sağlayın."
+        )
 
     # 2. İş İlanı Metnini Çıkar
     job_text = ""
@@ -51,20 +64,25 @@ async def analyze(
                 )
 
     # 3. Gemini API ile Karşılaştırmalı Analiz Yap
-    analysis_result = analyze_cv_suitability(cv_text, job_text)
+    analysis_result = analyze_cv_suitability(final_cv_text, job_text)
 
     # 4. Kayıt ve Yetki Sınırlandırması (Misafir vs. Üye Farkı)
     if user:
         # Üye kullanıcı ise: Tam raporu veritabanına kaydet ve tam raporu dön
         save_scan_history(
             user_id=user.id,
-            cv_filename=cv_file.filename,
+            cv_filename=final_cv_filename,
             job_url=job_url or "",
             job_text=job_text[:1000] + ("..." if len(job_text) > 1000 else ""),
             score=analysis_result["uygunluk_skoru"],
             results=analysis_result
         )
-        return analysis_result
+        
+        # Uzantının da token'ı kaydedebilmesi için cv_text ve cv_filename bilgisini de sonuca ekleyelim
+        response_data = {**analysis_result}
+        response_data["cv_text"] = final_cv_text
+        response_data["cv_filename"] = final_cv_filename
+        return response_data
     else:
         # Misafir kullanıcı ise: Raporun gelişmiş kısımlarını filtrele ve kısıtlı rapor dön
         filtered_result = {
@@ -74,7 +92,6 @@ async def analyze(
             "eksik_yonler": ["(Kilitli Özellik) Eksik gereksinimler ve analiz detaylarını görmek için lütfen giriş yapın veya ücretsiz üye olun."],
             "optimizasyon_onerileri": ["(Kilitli Özellik) CV'nizi bu ilana göre optimize edecek kişiselleştirilmiş önerileri görmek için lütfen giriş yapın veya ücretsiz üye olun."],
             "mulakat_sorulari": ["(Kilitli Özellik) Bu ilan için özel hazırlanan mülakat sorularını görmek için lütfen giriş yapın veya ücretsiz üye olun."],
-            # Faz 4 Kilitli Alanlar:
             "eksik_ats_anahtar_kelimeleri": ["(Kilitli Özellik) Eksik ATS anahtar kelimelerini görmek için lütfen giriş yapın veya ücretsiz üye olun."],
             "cv_optimizasyon_kilavuzu": [
                 {

@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "CV Matcher Companion",
+  "version": "1.0.0",
+  "description": "LinkedIn ve Kariyer.net iş ilanlarını anında özgeçmişinizle analiz edin.",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://*.kariyer.net/*",
+    "http://localhost:8080/*",
+    "http://127.0.0.1:8080/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/jobs/*",
+        "https://*.linkedin.com/jobs/view/*",
+        "https://*.kariyer.net/*",
+        "http://localhost:8080/*",
+        "http://127.0.0.1:8080/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "CV Matcher'ı Aç"
+  }
+}

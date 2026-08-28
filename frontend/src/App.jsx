@@ -269,6 +269,16 @@ export default function App() {
       const data = await response.json();
       setResults(data);
 
+      // Chrome Extension için CV metnini senkronize et
+      if (data.cv_text) {
+        window.dispatchEvent(new CustomEvent("CV_MATCHER_SYNC", {
+          detail: {
+            cv_text: data.cv_text,
+            cv_filename: data.cv_filename || (file ? file.name : "CV.pdf")
+          }
+        }));
+      }
+
       if (token) {
         loadHistory(token);
         setFlowState('full_result');
