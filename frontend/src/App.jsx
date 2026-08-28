@@ -366,7 +366,7 @@ export default function App() {
       <main className="flex-grow max-w-7xl w-full mx-auto p-6 flex flex-col justify-center">
 
         {error && (
-          <div className="max-w-xl mx-auto w-full mb-6 p-4 bg-rose-955/40 border border-rose-800/60 text-rose-350 rounded-2xl flex items-start gap-3 text-sm animate-fadeIn shadow-sm">
+          <div className="max-w-xl mx-auto w-full mb-6 p-4 bg-rose-950/40 border border-rose-800/60 text-rose-350 rounded-2xl flex items-start gap-3 text-sm animate-fadeIn shadow-sm">
             <AlertCircle className="w-5 h-5 text-rose-500 shrink-0" />
             <div>
               <p className="font-extrabold text-white">Bir Sorun Oluştu</p>
@@ -586,13 +586,13 @@ export default function App() {
 
               {jobMethod === 'url' ? (
                 <div className="space-y-2 animate-fadeIn">
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-wider">İlan linki</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-wider">İlan linki</label>
                   <input
                     type="url"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="LinkedIn, Kariyer.net veya iş ilanı linkini yapıştır"
-                    className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-955/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                    className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-950 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                   />
                 </div>
               ) : (
@@ -603,7 +603,7 @@ export default function App() {
                     onChange={(e) => setTextFallback(e.target.value)}
                     rows={6}
                     placeholder="İş ilanındaki açıklamayı buraya yapıştırın..."
-                    className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-[#090d1a]/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all resize-none"
+                    className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-950 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all resize-none"
                   />
                 </div>
               )}
@@ -785,7 +785,7 @@ export default function App() {
                       ))}
                     </div>
                   ) : (
-                    <div className="text-center py-16 flex flex-col items-center justify-center bg-slate-955/40 border border-dashed border-slate-800 rounded-xl p-8">
+                    <div className="text-center py-16 flex flex-col items-center justify-center bg-slate-950/40 border border-dashed border-slate-800 rounded-xl p-8">
                       <div className="p-4 bg-[#131B2E] border border-slate-800 rounded-xl text-slate-500 mb-3 shadow-inner">
                         <FileText className="w-10 h-10 text-slate-500" />
                       </div>
@@ -847,7 +847,7 @@ export default function App() {
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-slate-955 text-slate-400 py-12 px-6 shrink-0 border-t border-slate-900">
+      <footer className="bg-slate-950 text-slate-400 py-12 px-6 shrink-0 border-t border-slate-900">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-medium">
           <div className="flex items-center gap-2.5">
             <div className="p-2 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl text-white">
@@ -887,14 +887,14 @@ export default function App() {
             </p>
 
             {authError && (
-              <div className="mb-4 p-3.5 bg-rose-955/40 border border-rose-800 text-rose-350 rounded-xl text-xs font-semibold flex gap-2">
+              <div className="mb-4 p-3.5 bg-rose-950/40 border border-rose-800 text-rose-350 rounded-xl text-xs font-semibold flex gap-2">
                 <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
                 <span>{authError}</span>
               </div>
             )}
 
             {authSuccess && (
-              <div className="mb-4 p-3.5 bg-emerald-955/40 border border-emerald-805 text-emerald-400 rounded-xl text-xs font-semibold flex gap-2">
+              <div className="mb-4 p-3.5 bg-emerald-900/40 border border-emerald-805 text-emerald-400 rounded-xl text-xs font-semibold flex gap-2">
                 <CheckCircle className="w-4 h-4 mt-0.5 shrink-0 text-emerald-500" />
                 <span>{authSuccess}</span>
               </div>
@@ -921,7 +921,7 @@ export default function App() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-955/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+                  className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-950 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
                 />
               </div>
 
@@ -964,7 +964,7 @@ export default function App() {
                 <select
                   value={obStatus}
                   onChange={(e) => setObStatus(e.target.value)}
-                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-955/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                 >
                   <option value="">Seçiniz...</option>
                   <option value="student">Öğrenciyim</option>
@@ -981,16 +981,16 @@ export default function App() {
                   value={obRoles}
                   onChange={(e) => setObRoles(e.target.value)}
                   placeholder="Örn: Product, Growth, Finance, Data..."
-                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg text-sm bg-slate-955/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg text-sm bg-slate-950 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase tracking-wider mb-2">Lokasyon Tercihi</label>
+                <label className="block text-xs font-bold text-slate-455 uppercase tracking-wider mb-2">Lokasyon Tercihi</label>
                 <select
                   value={obLocation}
                   onChange={(e) => setObLocation(e.target.value)}
-                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-955/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                 >
                   <option value="Istanbul">İstanbul</option>
                   <option value="Turkiye">Türkiye geneli</option>
@@ -1000,11 +1000,11 @@ export default function App() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-450 uppercase tracking-wider mb-2">İş Arama Durumu</label>
+                <label className="block text-xs font-bold text-slate-455 uppercase tracking-wider mb-2">İş Arama Durumu</label>
                 <select
                   value={obSearch}
                   onChange={(e) => setObSearch(e.target.value)}
-                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-955/40 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="block w-full px-4 py-2.5 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                 >
                   <option value="">Seçiniz...</option>
                   <option value="active">Aktif olarak iş arıyorum</option>
