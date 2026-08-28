@@ -600,10 +600,10 @@ export default function App() {
                   <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-wider">İlan açıklaması</label>
                   <textarea
                     value={textFallback}
-                    onChange={(e) => textFallback && setTextFallback(e.target.value)}
+                    onChange={(e) => setTextFallback(e.target.value)}
                     rows={6}
                     placeholder="İş ilanındaki açıklamayı buraya yapıştırın..."
-                    className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-slate-955/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all resize-none"
+                    className="block w-full px-4 py-3 border border-slate-700 rounded-lg text-sm bg-[#090d1a]/40 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all resize-none"
                   />
                 </div>
               )}
